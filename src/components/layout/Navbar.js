@@ -5,7 +5,7 @@ import logo from "../../img/logo.png";
 export default function NavbarLayout() {
   return (
     <>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light" expand="lg" className="fixed-top">
         <Navbar.Brand href="#home">
           <img style={logoStyle} src={logo} alt="logo"></img>
         </Navbar.Brand>

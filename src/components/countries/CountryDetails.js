@@ -3,24 +3,26 @@ import axios from "axios";
 
 export default function CountryDetails(props) {
   const [details, setDetails] = useState([]);
-  console.log(props);
+
   const name = props.location.pathname.split("/")[2];
-  console.log(name);
 
   useEffect(() => {
     async function fetchData() {
       const res = await axios.get(
         `https://restcountries.eu/rest/v2/name/${name}`
       );
-      console.log(res.data[0].name);
       setDetails(res.data[0]);
     }
+
     fetchData();
-  }, [name, props]);
+  }, [name]);
+
+  const { Countryname, capital, regin, subregion } = details;
 
   return (
     <div>
-      <p>{details.name}</p>
+      <p>{Countryname}</p>
+      <p>{capital}</p>
     </div>
   );
 }
