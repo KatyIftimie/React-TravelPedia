@@ -1,12 +1,14 @@
 import React from "react";
-import { Navbar, Nav, Form, Button, FormControl } from 'react-bootstrap'
-import logo from '../../img/logo.png';
+import { Navbar, Nav, Form, Button, FormControl } from "react-bootstrap";
+import logo from "../../img/logo.png";
 
 export default function NavbarLayout() {
   return (
     <>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home"><img style={logoStyle} src={logo} alt="logo" ></img></Navbar.Brand>
+        <Navbar.Brand href="#home">
+          <img style={logoStyle} src={logo} alt="logo"></img>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -23,8 +25,7 @@ export default function NavbarLayout() {
   );
 }
 
-
-const logoStyle={
-    width:"45%",
-    height:"45%"
+const logoStyle = {
+  width: "45%",
+  height: "45%",
 };
