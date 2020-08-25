@@ -9,6 +9,7 @@ import Africa from "./components/continents/Africa";
 import Americas from "./components/continents/Americas";
 import Oceania from "./components/continents/Oceania";
 import Asia from "./components/continents/Asia";
+import CountryDetails from "./components/countries/CountryDetails";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/oceania" component={Oceania}></Route>
         <Route exact path="/americas" component={Americas}></Route>
         <Route exact path="/asia" component={Asia}></Route>
+        <Route path="/details/:name" component={CountryDetails}></Route>
       </Switch>
     </>
   );
