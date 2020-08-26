@@ -13,12 +13,14 @@ export default function CountryDetails(props) {
       let data = await response.json();
       if (response.ok) {
         setDetails(data[0]);
+      } else {
+        setDetails([]);
       }
-      
     }
 
     fetchData();
   }, [countryname]);
+
   console.log(details);
 
   const {
@@ -31,14 +33,13 @@ export default function CountryDetails(props) {
     borders,
     timezones,
     currencies,
-    languages
-    
+    languages,
   } = details;
-  if(details.length === 0 ){
-    return (
-      <p>Country not found!</p>
-    ) 
+
+  if (details.length === 0) {
+    return <h1 className="text-center">Country not found!</h1>;
   }
+
   return (
     <div className="container">
       <h1 className="my-4">{name}</h1>
@@ -51,15 +52,27 @@ export default function CountryDetails(props) {
           <h4 className="descriptions">Region: {region}</h4>
           <h4 className="descriptions">Subregion: {subregion}</h4>
           <h4 className="descriptions">Population: {population}</h4>
-          <h4 className="descriptions">Language: {languages ? languages[0].name : null} </h4>
+          <h4 className="descriptions">
+            Language: {languages ? languages[0].name : null}{" "}
+          </h4>
           <h4 className="descriptions">Timezone:</h4>
           <ul style={listStyle}>
-             {timezones ? timezones.map(timezone => { return <li>{timezone}</li>}) : null}
+            {timezones
+              ? timezones.map((timezone) => {
+                  return <li>{timezone}</li>;
+                })
+              : null}
           </ul>
-          <h4 className="descriptions">Currency : {currencies ? currencies[0].name : null} </h4>
+          <h4 className="descriptions">
+            Currency : {currencies ? currencies[0].name : null}{" "}
+          </h4>
           <h4 className="descriptions">Neighbours: </h4>
           <ul style={listStyle}>
-             {borders ? borders.map(neighbour => { return <li>{neighbour}</li>}) : null}
+            {borders
+              ? borders.map((neighbour) => {
+                  return <li>{neighbour}</li>;
+                })
+              : null}
           </ul>
         </div>
       </div>
@@ -69,16 +82,15 @@ export default function CountryDetails(props) {
 
 const imgStyle = {
   maxWidth: "100%",
-  maxHeight:"100%",
-  border: "5px solid #98a1a8"
+  maxHeight: "100%",
+  border: "5px solid #98a1a8",
 };
 
-
-const listStyle={
+const listStyle = {
   listStyleType: "none",
   margin: "0",
-  padding: "0"
-}
+  padding: "0",
+};
 {
   /* <p>{name}</p>
       <p>{capital}</p>
