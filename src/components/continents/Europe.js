@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Country from "../countries/Country";
-import { Link } from "react-router-dom";
 
 export default function Europe() {
   const [countries, setCountries] = useState([]);

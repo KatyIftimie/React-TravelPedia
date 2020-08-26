@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import CountryDetails from "./CountryDetails";
 
 export default function Country({ country }) {
   const { name, capital, flag } = country;
