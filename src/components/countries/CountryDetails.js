@@ -4,24 +4,27 @@ import axios from "axios";
 export default function CountryDetails(props) {
   const [details, setDetails] = useState([]);
 
-  const name = props.location.pathname.split("/")[2];
+  const countryname = props.location.pathname.split("/")[2];
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get(
-        `https://restcountries.eu/rest/v2/name/${name}`
+      let response = await fetch(
+        `https://restcountries.eu/rest/v2/name/${countryname}`
       );
-      setDetails(res.data[0]);
+      let data = await response.json();
+      if (response.ok) {
+        setDetails(data[0]);
+      }
     }
 
     fetchData();
-  }, [name]);
+  }, [countryname]);
 
-  const { Countryname, capital, regin, subregion } = details;
+  const { name, capital, region, subregion } = details;
 
   return (
     <div>
-      <p>{Countryname}</p>
+      <p>{name}</p>
       <p>{capital}</p>
     </div>
   );

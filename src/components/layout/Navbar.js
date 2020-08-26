@@ -6,14 +6,14 @@ export default function NavbarLayout() {
   return (
     <>
       <Navbar bg="light" expand="lg" className="fixed-top">
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="/">
           <img style={logoStyle} src={logo} alt="logo"></img>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#home">Visited</Nav.Link>
-            <Nav.Link href="#link">Wish List</Nav.Link>
+            <Nav.Link href="/">Visited</Nav.Link>
+            <Nav.Link href="#">Wish List</Nav.Link>
           </Nav>
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
