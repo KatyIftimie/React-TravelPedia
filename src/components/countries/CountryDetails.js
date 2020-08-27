@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import WishList from "../layout/WishList";
 
 export default function CountryDetails(props) {
   const [details, setDetails] = useState([]);
 
   const countryname = props.location.pathname.split("/")[2];
+  const [addWish, setAddWish] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -21,9 +23,10 @@ export default function CountryDetails(props) {
     fetchData();
   }, [countryname]);
 
-  console.log(details);
+  // console.log(details);
 
   const {
+    alpha3Code,
     name,
     capital,
     region,
@@ -40,13 +43,23 @@ export default function CountryDetails(props) {
     return <h1 className="text-center">Country not found!</h1>;
   }
 
+  const handleAddToWish = (name) => {
+    setAddWish(name);
+    console.log("Wish: " + addWish);
+  }
+
   return (
     <div className="container">
       <h1 className="my-4">{name}</h1>
       <div className="row">
         <div className="col-md-8">
           <img style={imgStyle} src={flag} alt="flag"></img>
-          <button className="wishButton"> Add to Wish List</button>
+          <button className="wishButton" onClick={() => handleAddToWish(name)}>
+            <WishList wish={addWish}>
+
+            </WishList>
+            <p> Add to Wish List</p>
+          </button>
         </div>
         <div className="col-md-4">
           <h3 className="my-3">Capital: {capital}</h3>
@@ -60,8 +73,8 @@ export default function CountryDetails(props) {
           <ul style={listStyle}>
             {timezones
               ? timezones.map((timezone) => {
-                  return <li>{timezone}</li>;
-                })
+                return <li>{timezone}</li>;
+              })
               : null}
           </ul>
           <h4 className="descriptions">
@@ -71,8 +84,8 @@ export default function CountryDetails(props) {
           <ul style={listStyle}>
             {borders
               ? borders.map((neighbour) => {
-                  return <li>{neighbour}</li>;
-                })
+                return <li>{neighbour}</li>;
+              })
               : null}
           </ul>
         </div>

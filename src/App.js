@@ -5,6 +5,7 @@ import NavbarLayout from "./components/layout/Navbar";
 import Home from "./components/layout/Home";
 import { Switch, Route } from "react-router-dom";
 import CountryDetails from "./components/countries/CountryDetails";
+import WishList from "./components/layout/WishList";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home}></Route>
         <Route path="/details/:name" component={CountryDetails}></Route>
+        <Route path="/wishList" component={WishList}></Route>
       </Switch>
     </>
   );
