@@ -46,6 +46,7 @@ export default function CountryDetails(props) {
       <div className="row">
         <div className="col-md-8">
           <img style={imgStyle} src={flag} alt="flag"></img>
+          <button className="wishButton"> Add to Wish List</button>
         </div>
         <div className="col-md-4">
           <h3 className="my-3">Capital: {capital}</h3>
