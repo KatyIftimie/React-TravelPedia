@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import WishList from "../layout/WishList";
+import styled from "styled-components";
 
 export default function CountryDetails(props) {
   const [details, setDetails] = useState([]);
+  const [wishList, setWishList] = useState([]);
 
   const countryname = props.location.pathname.split("/")[2];
-  const [addWish, setAddWish] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -15,15 +15,14 @@ export default function CountryDetails(props) {
       let data = await response.json();
       if (response.ok) {
         setDetails(data[0]);
-      } else {
-        setDetails([]);
+      }
+      if (response.status !== 200) {
+        setDetails(["empty"]);
       }
     }
 
     fetchData();
   }, [countryname]);
-
-  // console.log(details);
 
   const {
     alpha3Code,
@@ -39,29 +38,39 @@ export default function CountryDetails(props) {
     languages,
   } = details;
 
-  if (details.length === 0) {
+  const StyledDiv = styled.div`
+    width: 66.6%;
+    height: auto;
+    background-image: url(${details.flag});
+    background-repeat: no-repeat;
+    background-size: 100%;
+
+    :hover {
+      filter: brightness(0.7) drop-shadow(8px 8px 10px gray);
+      transition: filter 350ms ease;
+      cursor: pointer;
+    }
+  `;
+
+  if (details[0] === "empty") {
     return <h1 className="text-center">Country not found!</h1>;
   }
 
-  const handleAddToWish = (name) => {
-    setAddWish(name);
-    console.log("Wish: " + addWish);
-  }
-
   return (
-    <div className="container">
+    <div
+      className="container"
+      style={{
+        paddingBottom: "45px",
+        paddingLeft: "75px",
+        backgroundColor: "rgb(228, 231, 237)",
+      }}
+    >
       <h1 className="my-4">{name}</h1>
       <div className="row">
-        <div className="col-md-8">
-          <img style={imgStyle} src={flag} alt="flag"></img>
-          <button className="wishButton" onClick={() => handleAddToWish(name)}>
-            <WishList wish={addWish}>
-
-            </WishList>
-            <p> Add to Wish List</p>
-          </button>
-        </div>
-        <div className="col-md-4">
+        <StyledDiv className="container-fluid">
+          <StyledPopUp>aaaa</StyledPopUp>
+        </StyledDiv>
+        <div className="col-md-4 ">
           <h3 className="my-3">Capital: {capital}</h3>
           <h4 className="descriptions">Region: {region}</h4>
           <h4 className="descriptions">Subregion: {subregion}</h4>
@@ -73,8 +82,8 @@ export default function CountryDetails(props) {
           <ul style={listStyle}>
             {timezones
               ? timezones.map((timezone) => {
-                return <li>{timezone}</li>;
-              })
+                  return <li>{timezone}</li>;
+                })
               : null}
           </ul>
           <h4 className="descriptions">
@@ -84,8 +93,8 @@ export default function CountryDetails(props) {
           <ul style={listStyle}>
             {borders
               ? borders.map((neighbour) => {
-                return <li>{neighbour}</li>;
-              })
+                  return <li>{neighbour}</li>;
+                })
               : null}
           </ul>
         </div>
@@ -100,18 +109,18 @@ const imgStyle = {
   border: "5px solid #98a1a8",
 };
 
+const StyledPopUp = styled.button`
+  display: none;
+  :hover {
+    display: flex;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+  }
+`;
+
 const listStyle = {
   listStyleType: "none",
   margin: "0",
   padding: "0",
 };
-{
-  /* <p>{name}</p>
-      <p>{capital}</p>
-      <p>{region}</p>
-      <img src={flag} alt="flag"></img>
-      <p>{timezones}</p>
-      <p>{population}</p>
-      <p>{borders}</p>
-      <p>{subregion}</p> */
-}

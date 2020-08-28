@@ -24,7 +24,7 @@ const MapChart = ({ setTooltipContent }) => {
     <>
       <ComposableMap
         data-tip=""
-        projectionConfig={{ scale: 180 }}
+        projectionConfig={{ scale: 150 }}
         className="mr-6"
       >
         <ZoomableGroup>

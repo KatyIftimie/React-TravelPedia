@@ -5,6 +5,7 @@ import NavbarLayout from "./components/layout/Navbar";
 import Home from "./components/layout/Home";
 import { Switch, Route } from "react-router-dom";
 import CountryDetails from "./components/countries/CountryDetails";
+import Footer from "./components/layout/Footer";
 import WishList from "./components/layout/WishList";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/details/:name" component={CountryDetails}></Route>
         <Route path="/wishList" component={WishList}></Route>
       </Switch>
+      <Footer />
     </>
   );
 }
