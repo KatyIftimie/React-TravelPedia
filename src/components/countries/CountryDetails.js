@@ -15,8 +15,7 @@ export default function CountryDetails(props) {
             let data = await response.json();
             if (response.ok) {
                 setDetails(data[0]);
-            }
-            if (response.status !== 200) {
+            } else {
                 setDetails(["empty"]);
             }
         }
