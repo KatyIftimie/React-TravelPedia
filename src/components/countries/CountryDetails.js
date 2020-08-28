@@ -81,8 +81,8 @@ export default function CountryDetails(props) {
           <h4 className="descriptions">Timezone:</h4>
           <ul style={listStyle}>
             {timezones
-              ? timezones.map((timezone) => {
-                  return <li>{timezone}</li>;
+              ? timezones.map((timezone, keyIndex) => {
+                  return <li key={keyIndex}>{timezone}</li>;
                 })
               : null}
           </ul>
@@ -92,8 +92,8 @@ export default function CountryDetails(props) {
           <h4 className="descriptions">Neighbours: </h4>
           <ul style={listStyle}>
             {borders
-              ? borders.map((neighbour) => {
-                  return <li>{neighbour}</li>;
+              ? borders.map((neighbour, keyIndex) => {
+                  return <li key={keyIndex}>{neighbour}</li>;
                 })
               : null}
           </ul>
