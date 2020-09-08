@@ -82,6 +82,19 @@ export default function RegisterUser() {
       />
       {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
 
+      <label>Register as:</label>
+      <select
+        name="userType"
+        ref={register({
+          required: true,
+        })}
+      >
+        <option value="HOST">Host</option>
+        <option value="ADMIN">Admin</option>
+        <option value="GUEST">Guest</option>
+      </select>
+
+
 
       <input type="submit" onClick={handleSubmit(onSubmit)} />
     </form>
