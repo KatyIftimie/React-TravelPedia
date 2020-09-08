@@ -6,7 +6,7 @@ import Home from "./components/layout/Home";
 import { Switch, Route } from "react-router-dom";
 import CountryDetails from "./components/countries/CountryDetails";
 import Footer from "./components/layout/Footer";
-import WishList from "./components/layout/WishList";
+import RegisterUser from "./components/countries/RegisterUser";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home}></Route>
         <Route path="/details/:name" component={CountryDetails}></Route>
-        <Route path="/wishList" component={WishList}></Route>
+        <Route path="/register" component={RegisterUser}></Route>
       </Switch>
       <Footer />
     </>
