@@ -2,16 +2,10 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <div bg="light" className="d-flex flex-column">
-      <footer className="footer">
-        <div>
-          <span>&copy; 2020 codeCool</span>
-        </div>
-        <div className="ml-auto">
-          <span>Powered by </span>
-          <span> TravelTeam</span>
-        </div>
-      </footer>
-    </div>
+    <footer id="sticky-footer" className="py-4 bg-dark text-white-50 bottom-0">
+      <div className="container text-center">
+        <small>Copyright &copy; TravelPedia</small>
+      </div>
+    </footer>
   );
 }
