@@ -5,6 +5,11 @@
 
 body {
   font-family: "BioRhyme", serif !important;
+  min-height: 100%;
+}
+
+body > #root {
+  height: 100vh;
 }
 
 .descriptions {
@@ -25,6 +30,7 @@ body {
 #sticky-footer {
   flex-shrink: none;
   width: 100%;
+  margin-top: auto;
 }
 
 .btn-outline-success {

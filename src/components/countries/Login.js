@@ -16,6 +16,9 @@ export default function Login() {
         if (res.status === 200) {
           setIsLogged(true);
           setLogInMsj(res.data);
+          axios
+            .get("http://localhost:8080/api/v1/auth/is-logged-in")
+            .then((res) => console.log(res));
         }
       })
       .catch((err) => {
