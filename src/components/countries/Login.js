@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router";
 import { useForm } from "react-hook-form";
 import "../../style/RegisterForm.css";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
 
 export default function Login() {
   const { register, handleSubmit } = useForm({});
   const [logInMsj, setLogInMsj] = useState("");
   const [isLoggedIn, setIsLogged] = useState(false);
+  const history = useHistory();
   const LOGIN_API = "http://localhost:8080/api/v1/auth/login";
 
   const onSubmit = (user) => {
@@ -17,10 +19,9 @@ export default function Login() {
         if (res.status === 200) {
           setIsLogged(true);
           setLogInMsj(res.data);
-          console.log("login api");
           window.sessionStorage.setItem("login", user.email);
+          setTimeout(() => {}, 1500);
         }
-
       })
       .catch((err) => {
         setLogInMsj(err.response.data);

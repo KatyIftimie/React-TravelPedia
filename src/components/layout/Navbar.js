@@ -20,8 +20,6 @@ export default function NavbarLayout() {
     setQuery(title);
   };
 
-
-
   return (
     <>
       <Navbar bg="light" expand="lg" className="fixed-top">
@@ -31,10 +29,14 @@ export default function NavbarLayout() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/register">Register</Nav.Link>
+            <Nav.Link href="/register">
+              {userIsLogin ? null : "Register"}
+            </Nav.Link>
             <Nav.Link href="/login">{userIsLogin ? null : "Login"}</Nav.Link>
             <Nav.Link href="/logout">{userIsLogin ? `Logout` : null}</Nav.Link>
-            <Nav.Link href="#">{userIsLogin ? localStorage.getItem("login") : null}</Nav.Link>
+            <Nav.Link href="#">
+              {userIsLogin ? localStorage.getItem("login") : null}
+            </Nav.Link>
           </Nav>
           <Form inline>
             <FormControl
