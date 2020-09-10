@@ -37,12 +37,17 @@ export default function RegisterUser() {
           name="email"
           ref={register({
             required: true,
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Invalid email address",
+            },
           })}
           placeholder="Email"
         />
         {errors.email && errors.email.type === "required" && (
           <p>Your must enter your email address.</p>
         )}
+        {errors.email && <p>{errors.email.message}</p>}
         <label className="d-inline">First Name: </label>
         <input
           type="text"
