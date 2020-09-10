@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import "../../style/RegisterForm.css";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 export default function Login() {
   const { register, handleSubmit } = useForm({});
@@ -16,10 +17,10 @@ export default function Login() {
         if (res.status === 200) {
           setIsLogged(true);
           setLogInMsj(res.data);
-          axios
-            .get("http://localhost:8080/api/v1/auth/is-logged-in")
-            .then((res) => console.log(res));
+          console.log("login api");
+          window.sessionStorage.setItem("login", user.email);
         }
+
       })
       .catch((err) => {
         setLogInMsj(err.response.data);
