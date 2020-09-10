@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+
 import { Redirect } from "react-router";
 import { useForm } from "react-hook-form";
 import "../../style/RegisterForm.css";
@@ -9,7 +9,7 @@ export default function Login() {
   const { register, handleSubmit } = useForm({});
   const [logInMsj, setLogInMsj] = useState("");
   const [isLoggedIn, setIsLogged] = useState(false);
-  const history = useHistory();
+
   const LOGIN_API = "http://localhost:8080/api/v1/auth/login";
 
   const onSubmit = (user) => {
@@ -21,7 +21,7 @@ export default function Login() {
           setLogInMsj(res.data);
           window.sessionStorage.setItem("login", user.email);
           setTimeout(() => {
-            history.push("/");
+            // history.push("/");
           }, 1500);
         }
       })

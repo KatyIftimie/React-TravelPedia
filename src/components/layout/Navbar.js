@@ -47,17 +47,17 @@ export default function NavbarLayout() {
             {userIsLogin ? (
               <Nav.Link href="/logout"> Logout</Nav.Link>
             ) : (
-              <Nav.Link href="/login"> Login </Nav.Link>
+              <Nav.Link href="/login"> Login</Nav.Link>
             )}
             <Nav.Link href="#">
               Welcome {userIsLogin ? details.lastName : null}
             </Nav.Link>
-            <Nav.Link href="#">
-              {details && details.type.name === "HOST" ? "ADD RENTAL" : null}
-            </Nav.Link>
-            <Nav.Link href="#">
-              {details && details.type.name === "GUEST" ? "See bookings" : null}
-            </Nav.Link>
+
+            {userIsLogin && details && details.type.name === "HOST" ? (
+              <Nav.Link href="/add-rental"> Add Rental</Nav.Link>
+            ) : userIsLogin && details && details.type.name === "GUEST" ? (
+              <Nav.Link href="/bookings"> See Bookings</Nav.Link>
+            ) : null}
           </Nav>
           <Form inline>
             <FormControl
