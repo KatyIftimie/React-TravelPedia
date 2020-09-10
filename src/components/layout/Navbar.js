@@ -9,11 +9,14 @@ export default function NavbarLayout() {
   const [query, setQuery] = useState("");
   const [userIsLogin, setIsLogin] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [details, setDetails] = useState('');
 
-  const USER_API = "localhost:8080/api/v1/auth/get-user/";
-  const getUserDetails = async () => {
-    await axios.get(USER_API + userEmail).then((res) => {
-      console.log(res);
+  const USER_API = "http://localhost:8080/api/v1/auth/get-user/";
+  const getUserDetails = () => {
+    axios.get(USER_API + userEmail).then((res) => {
+      console.log(res.data);
+      setDetails(res.data);
+
     });
   };
 
@@ -21,12 +24,12 @@ export default function NavbarLayout() {
     if (window.sessionStorage.getItem("login")) {
       setIsLogin(true);
       setUserEmail(window.sessionStorage.getItem("login"));
-
       getUserDetails();
+      // axios.get(USER_API + userEmail).then((res) => { console.log(res.data) })
     } else {
       setIsLogin(false);
     }
-  }, [getUserDetails, userEmail, userIsLogin]);
+  }, [userEmail, userIsLogin]);
 
   const handleClick = () => {
     setQuery(title);
@@ -44,7 +47,7 @@ export default function NavbarLayout() {
             <Nav.Link href="/login">{userIsLogin ? null : "Login"}</Nav.Link>
             <Nav.Link href="/logout">{userIsLogin ? `Logout` : null}</Nav.Link>
             <Nav.Link href="#">
-              Welcome {userIsLogin ? sessionStorage.getItem("login") : null}
+              Welcome {userIsLogin ? details.lastName : null}
             </Nav.Link>
           </Nav>
           <Form inline>

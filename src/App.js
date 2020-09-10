@@ -9,6 +9,7 @@ import Footer from "./components/layout/Footer";
 import RegisterUser from "./components/countries/RegisterUser";
 import Login from "./components/countries/Login";
 import Logout from "./components/countries/Logout";
+import Rental from "./components/countries/Rental";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/register" component={RegisterUser}></Route>
         <Route path="/login" component={Login}></Route>
         <Route path="/logout" component={Logout}></Route>
+        <Route path="/rental" component={Rental}></Route>
       </Switch>
       <Footer />
     </>
