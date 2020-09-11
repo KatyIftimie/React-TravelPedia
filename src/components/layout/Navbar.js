@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Form, Button, FormControl } from "react-bootstrap";
+
 import { useCallback } from "react";
 import logo from "../../img/logo.png";
 import { Link } from "react-router-dom";
@@ -15,11 +16,12 @@ export default function NavbarLayout() {
   const USER_API = "http://localhost:8080/api/v1/auth/get-user/";
 
   const getUserDetails = useCallback(() => {
-    axios.get(USER_API + userEmail).then((res) => {
-      console.log(res.data);
-      setDetails(res.data);
-    });
-  });
+    if (userEmail.length > 0)
+      axios.get(USER_API + userEmail).then((res) => {
+        console.log(res.data);
+        setDetails(res.data);
+      });
+  }, [userEmail]);
 
   useEffect(() => {
     if (window.sessionStorage.getItem("login")) {
@@ -44,13 +46,16 @@ export default function NavbarLayout() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
+            {userIsLogin ? null : (
+              <Nav.Link href="/register">Register</Nav.Link>
+            )}
             {userIsLogin ? (
               <Nav.Link href="/logout"> Logout</Nav.Link>
             ) : (
               <Nav.Link href="/login"> Login</Nav.Link>
             )}
             <Nav.Link href="#">
-              Welcome {userIsLogin ? details.lastName : null}
+              {userIsLogin ? "Welcome " + details.lastName : null}
             </Nav.Link>
 
             {userIsLogin && details && details.type.name === "HOST" ? (
@@ -66,7 +71,7 @@ export default function NavbarLayout() {
               placeholder="Search"
               className="mr-sm-2"
             />
-            <Link to={`/details/${title}`}>
+            <Link to={`/country/${title}`}>
               <Button onClick={handleClick} variant="outline-success">
                 Search
               </Button>

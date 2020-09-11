@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import "../../style/RegisterForm.css";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 export default function RegisterUser() {
@@ -8,6 +9,7 @@ export default function RegisterUser() {
 
   const [registrationMessage, setRegistrationMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  let history = useHistory();
 
   const REGISTER_API = "http://localhost:8080/api/v1/auth/register";
 
@@ -21,6 +23,9 @@ export default function RegisterUser() {
         if (res.status === 200) {
           setIsSubmitted(true);
           setRegistrationMessage(res.data);
+          setTimeout(() => {
+            history.push("/login");
+          }, 1500);
         }
       })
       .catch((err) => {
@@ -87,7 +92,7 @@ export default function RegisterUser() {
 
         <label className="d-inline">Password: </label>
         <input
-          type="text"
+          type="password"
           name="password"
           placeholder="Your password"
           ref={register({
@@ -103,7 +108,7 @@ export default function RegisterUser() {
         <label className="d-inline">Confirm password</label>
         <input
           name="confirmPassword"
-          type="text"
+          type="password"
           placeholder="Confirm password"
           ref={register({
             validate: (value) =>
@@ -120,8 +125,8 @@ export default function RegisterUser() {
           })}
           className="form-control  d-inline-block"
         >
-          <option value="3">Host</option>
-          <option value="4">Guest</option>
+          <option value="2">Host</option>
+          <option value="3">Guest</option>
         </select>
         <span className={isSubmitted ? "text-success" : "text-danger"}>
           {registrationMessage}
