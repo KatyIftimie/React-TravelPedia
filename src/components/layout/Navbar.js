@@ -19,7 +19,7 @@ export default function NavbarLayout() {
       console.log(res.data);
       setDetails(res.data);
     });
-  });
+  }, [userEmail]);
 
   useEffect(() => {
     if (window.sessionStorage.getItem("login")) {
@@ -49,9 +49,17 @@ export default function NavbarLayout() {
             ) : (
               <Nav.Link href="/login"> Login</Nav.Link>
             )}
-            <Nav.Link href="#">
-              Welcome {userIsLogin ? details.lastName : null}
-            </Nav.Link>
+
+            {userIsLogin ? (
+              <Nav.Link href="#"> Welcome {details.lastName} </Nav.Link>
+            ) : (
+              <Nav.Link href="/register"> Register </Nav.Link>
+            )}
+
+            {/* 
+             <Nav.Link href="#">
+              {userIsLogin ? "Welcome " + details.lastName : null}
+            </Nav.Link> */}
 
             {userIsLogin && details && details.type.name === "HOST" ? (
               <Nav.Link href="/add-rental"> Add Rental</Nav.Link>
