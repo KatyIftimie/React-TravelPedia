@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactTooltip from "react-tooltip";
 import MapChart from "./MapChart";
-import "../../index.css";
+import "../../style/index.css";
 
 function Home() {
   const [content, setContent] = useState("");
