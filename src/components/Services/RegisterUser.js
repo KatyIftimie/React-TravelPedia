@@ -17,6 +17,7 @@ export default function RegisterUser() {
   password.current = watch("password", "");
 
   const onSubmit = (user) => {
+    console.log(user);
     axios
       .post(REGISTER_API, user)
       .then((res) => {

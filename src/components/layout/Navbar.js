@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Form, Button, FormControl } from "react-bootstrap";
 
-import { useCallback } from "react";
 import logo from "../../img/logo.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -15,23 +14,18 @@ export default function NavbarLayout() {
 
   const USER_API = "http://localhost:8080/api/v1/auth/get-user/";
 
-  const getUserDetails = useCallback(() => {
-    if (userEmail.length > 0)
+  useEffect(() => {
+    if (window.sessionStorage.getItem("login")) {
+      setUserEmail(window.sessionStorage.getItem("login"));
       axios.get(USER_API + userEmail).then((res) => {
         console.log(res.data);
         setDetails(res.data);
+        setIsLogin(true);
       });
-  }, [userEmail]);
-
-  useEffect(() => {
-    if (window.sessionStorage.getItem("login")) {
-      setIsLogin(true);
-      setUserEmail(window.sessionStorage.getItem("login"));
-      getUserDetails();
     } else {
       setIsLogin(false);
     }
-  }, [getUserDetails]);
+  }, [userEmail, userIsLogin]);
 
   const handleClick = () => {
     setQuery(title);
@@ -46,17 +40,17 @@ export default function NavbarLayout() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            {userIsLogin ? null : (
-              <Nav.Link href="/register">Register</Nav.Link>
-            )}
             {userIsLogin ? (
               <Nav.Link href="/logout"> Logout</Nav.Link>
             ) : (
               <Nav.Link href="/login"> Login</Nav.Link>
             )}
-            <Nav.Link href="#">
-              {userIsLogin ? "Welcome " + details.lastName : null}
-            </Nav.Link>
+
+            {userIsLogin ? (
+              <Nav.Link href="#"> Welcome {details.lastName} </Nav.Link>
+            ) : (
+              <Nav.Link href="/register"> Register </Nav.Link>
+            )}
 
             {userIsLogin && details && details.type.name === "HOST" ? (
               <Nav.Link href="/add-rental"> Add Rental</Nav.Link>
@@ -71,7 +65,7 @@ export default function NavbarLayout() {
               placeholder="Search"
               className="mr-sm-2"
             />
-            <Link to={`/country/${title}`}>
+            <Link to={`/details/${title}`}>
               <Button onClick={handleClick} variant="outline-success">
                 Search
               </Button>
