@@ -9,8 +9,10 @@ import axios from "axios";
 export default function AddRental() {
   const { register, errors, handleSubmit } = useForm({});
   let axiosConfig = {
+    method: "POST",
     headers: {
       "Access-Control-Allow-Origin": "*",
+      "X-Requested-With": "XMLHttpRequest",
     },
   };
 
@@ -59,7 +61,8 @@ export default function AddRental() {
           <div className="form-row">
             <label> Check-In </label>&nbsp;&nbsp;
             <input
-              type="time"
+              type="datetime-local"
+              my-date-format="DD/MM/YYYY, hh:mm:ss"
               step="1"
               name="checkInTime"
               placeholder="Time"
@@ -69,7 +72,8 @@ export default function AddRental() {
           <div className="form-row">
             <label> Check-Out </label>&nbsp;
             <input
-              type="time"
+              type="datetime-local"
+              my-date-format="DD/MM/YYYY, hh:mm:ss"
               step="1"
               name="checkOutTime"
               placeholder="Time"

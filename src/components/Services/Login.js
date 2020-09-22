@@ -16,7 +16,6 @@ export default function Login() {
   const LOGIN_API = "http://localhost:8080/api/v1/auth/login";
 
   const onSubmit = (user) => {
-    console.log(user);
     axios
       .post(LOGIN_API, user)
       .then((res) => {
