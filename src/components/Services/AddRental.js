@@ -1,13 +1,14 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+
 import "../../style/RegisterForm.css";
-import TimeField from "react-simple-timefield";
 
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
 export default function AddRental() {
   const { register, errors, handleSubmit } = useForm({});
+
   let axiosConfig = {
     method: "POST",
     headers: {
@@ -59,26 +60,26 @@ export default function AddRental() {
             </div>
           </div>
           <div className="form-row">
-            <label> Check-In </label>&nbsp;&nbsp;
-            <input
-              type="datetime-local"
-              my-date-format="DD/MM/YYYY, hh:mm:ss"
-              step="1"
-              name="checkInTime"
-              placeholder="Time"
-              ref={register}
-            />
-          </div>
-          <div className="form-row">
-            <label> Check-Out </label>&nbsp;
-            <input
-              type="datetime-local"
-              my-date-format="DD/MM/YYYY, hh:mm:ss"
-              step="1"
-              name="checkOutTime"
-              placeholder="Time"
-              ref={register}
-            />
+            <div className="col mb-3">
+              <label> Check-In </label>&nbsp;&nbsp;
+              <input
+                type="datetime-local"
+                my-date-format="DD/MM/YYYY, hh:mm:ss"
+                step="1"
+                name="checkInTime"
+                placeholder="Time"
+                ref={register}
+              />
+              <label> Check-Out </label>&nbsp;
+              <input
+                type="datetime-local"
+                my-date-format="DD/MM/YYYY, hh:mm:ss"
+                step="1"
+                name="checkOutTime"
+                placeholder="Time"
+                ref={register}
+              />
+            </div>
           </div>
           <div className="form-row">
             <div className="col mb-3">
@@ -87,6 +88,61 @@ export default function AddRental() {
                 accept="image/jpeg"
                 multiple
                 name="images"
+                ref={register}
+              />
+            </div>
+          </div>
+          {/* address */}
+
+          <div className="form-row">
+            <div className="col mb-3">
+              <input
+                type="text"
+                name="addressLine1"
+                placeholder="Address Line 1"
+              />
+            </div>
+            <div className="col mb-3">
+              <input
+                type="text"
+                name="addressLine2"
+                placeholder="Address Line 2"
+                ref={register}
+              />
+            </div>
+
+            <div className="col mb-3">
+              <input
+                type="text"
+                name="city"
+                placeholder="City"
+                ref={register}
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="col mb-3">
+              <input
+                type="text"
+                name="state"
+                placeholder="State"
+                ref={register}
+              />
+            </div>
+            <div className="col mb-3">
+              <input
+                type="text"
+                name="zipCode"
+                placeholder="ZipCode"
+                ref={register}
+              />
+            </div>
+            <div className="col mb-3">
+              <input
+                type="text"
+                name="country"
+                placeholder="Country"
                 ref={register}
               />
             </div>
@@ -105,7 +161,3 @@ export default function AddRental() {
     </div>
   );
 }
-
-const timeStyle = {
-  width: "50%",
-};
