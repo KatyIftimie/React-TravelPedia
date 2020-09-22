@@ -19,7 +19,6 @@ export default function Login() {
     axios
       .post(LOGIN_API, user)
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setIsLogged(true);
           setLogInMsj("Success");

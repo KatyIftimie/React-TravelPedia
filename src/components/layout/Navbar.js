@@ -18,7 +18,6 @@ export default function NavbarLayout() {
     if (window.sessionStorage.getItem("login")) {
       setUserEmail(window.sessionStorage.getItem("login"));
       axios.get(USER_API + userEmail).then((res) => {
-        console.log(res.data);
         setDetails(res.data);
         setIsLogin(true);
       });

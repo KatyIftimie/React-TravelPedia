@@ -30,7 +30,7 @@ export default function RegisterUser() {
         }
       })
       .catch((err) => {
-        setRegistrationMessage(err.response.data);
+        console.log(err);
       });
   };
 
