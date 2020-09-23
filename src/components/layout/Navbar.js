@@ -21,7 +21,6 @@ export default function NavbarLayout() {
         setDetails(res.data);
         setIsLogin(true);
         window.sessionStorage.setItem("userId", res.data.id);
-        console.log(res.data);
       });
     } else {
       setIsLogin(false);
@@ -56,7 +55,7 @@ export default function NavbarLayout() {
             {userIsLogin && details && details.type.name === "HOST" ? (
               <Nav.Link href="/add-rental"> Add Rental</Nav.Link>
             ) : userIsLogin && details && details.type.name === "GUEST" ? (
-              <Nav.Link href="/bookings"> See Bookings</Nav.Link>
+              <Nav.Link href="/bookings"> See My Bookings</Nav.Link>
             ) : null}
           </Nav>
           <Form inline>

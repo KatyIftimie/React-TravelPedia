@@ -1,163 +1,336 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-
-import "../../style/RegisterForm.css";
-
-import "react-datepicker/dist/react-datepicker.css";
+import React, { useState, useEffect } from "react";
+import { Formik, Form, Field, FieldArray } from "formik";
+import FormikCheckbox from "./FormikCheckbox";
 import axios from "axios";
 
-export default function AddRental() {
-  const { register, errors, handleSubmit } = useForm({});
+export default function AddRental2() {
+  const API_URL = "http://localhost:8080/api/v1";
+  const RENTAL_API_URL = "http://localhost:8080/api/v1/rentals";
 
-  let axiosConfig = {
-    method: "POST",
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "X-Requested-With": "XMLHttpRequest",
-    },
-  };
+  const [amnities, setAmnities] = useState([]);
+  const [roomTypes, setRoomType] = useState([]);
+  const [bedType, setBedType] = useState([]);
+  const [rentalType, setRentalType] = useState([]);
 
-  const onSubmit = (rental) => {
-    console.log(rental);
-    axios
-      .post("http://localhost:8080/api/v1/rentals", rental, axiosConfig)
-      .then((res) => {
-        console.log("da");
+  useEffect(() => {
+    async function fetchAmenities() {
+      let response = await fetch(API_URL + "/amenities");
+      let data = await response.json();
+
+      if (response.ok) {
+        setAmnities(data);
+      } else {
+        console.log("nu");
+      }
+    }
+
+    async function fetchRoomTypes() {
+      let response = await fetch(API_URL + "/rooms/room-types");
+      let data = await response.json();
+      if (response.ok) {
+        setRoomType(data);
+      } else {
+        console.log("nu camere");
+      }
+    }
+
+    async function fetchBeds() {
+      let response = await fetch(API_URL + "/beds");
+      let data = await response.json();
+      if (response.ok) {
+        setBedType(data);
+      } else {
+        console.log("nu paturi");
+      }
+    }
+
+    async function fetchRentalTypes() {
+      let response = await fetch(API_URL + "/rentals/rental-types", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
-  };
+      let data = await response.json();
+      if (response.ok) {
+        setRentalType(data);
+      } else {
+        console.log("nu rental type");
+      }
+    }
+
+    fetchAmenities();
+    fetchRoomTypes();
+    fetchBeds();
+    fetchRentalTypes();
+  }, []);
 
   return (
-    <div className="container">
-      <form className="form-signin" onSubmit={(e) => e.preventDefault}>
-        <div className="modal-header">
-          <h5 className="modal-title">Add New Rental</h5>
-        </div>
-        <div className="modal-body">
-          <div className="form-row">
-            <div className="col mb-3">
-              <label htmlFor="name"> Name</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Rental Name"
-                name="name"
-                ref={register({
-                  required: true,
-                })}
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="col mb-3">
-              <textarea
-                type="text"
-                className="form-control "
-                placeholder="Enter Description"
-                name="description"
-                rows="4"
-                ref={register}
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="col mb-3">
-              <label> Check-In </label>&nbsp;&nbsp;
-              <input
-                type="datetime-local"
-                my-date-format="DD/MM/YYYY, hh:mm:ss"
-                step="1"
-                name="checkInTime"
-                placeholder="Time"
-                ref={register}
-              />
-              <label> Check-Out </label>&nbsp;
-              <input
-                type="datetime-local"
-                my-date-format="DD/MM/YYYY, hh:mm:ss"
-                step="1"
-                name="checkOutTime"
-                placeholder="Time"
-                ref={register}
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="col mb-3">
-              <input
-                type="file"
-                accept="image/jpeg"
-                multiple
-                name="images"
-                ref={register}
-              />
-            </div>
-          </div>
-          {/* address */}
+    <div>
+      <h5 className="text-center">Add New Rental</h5>
+      <Formik
+        initialValues={{
+          name: "",
+          description: "",
+          checkInTime: "",
+          checkOutTime: "",
+          rentalTypeID: "",
+          hostUserID: window.sessionStorage.getItem("userId"),
+          addressDto: {
+            addressLine1: "",
+            addressLine2: "",
+            city: "",
+            state: "",
+            zipCode: "",
+            country: "",
+          },
+          amenitiesIDs: [],
+          roomsDtoList: [
+            {
+              name: "",
+              description: "",
+              price: "",
+              amenitiesIDs: [],
+              bedsIDs: [],
+              roomTypeID: "",
+            },
+          ],
+        }}
+        onSubmit={(values) => {
+          // same shape as initial values
+          axios.post(RENTAL_API_URL, values).then((res) => {
+            if (res.status === 200) {
+              console.log("succes");
+            }
+          });
+          console.log(values);
+        }}
+      >
+        {({ values }) => (
+          <div className="container">
+            <div className="row">
+              <div className="col-md-10 mx-auto">
+                <Form className="addRentalForm">
+                  <div className="form-group row">
+                    <div className="col-sm-6">
+                      <Field name="name" placeholder="Name" />
+                    </div>
+                    <div className="col-sm-6">
+                      <Field name="description" placeholder="Description" />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-sm-6">
+                      Check In
+                      <Field name="checkInTime" type="datetime-local" />
+                    </div>
+                    <div className="col-sm-6">
+                      Check Out
+                      <Field
+                        name="checkOutTime"
+                        placeholder="Name"
+                        type="datetime-local"
+                      />
+                    </div>
+                  </div>
 
-          <div className="form-row">
-            <div className="col mb-3">
-              <input
-                type="text"
-                name="addressLine1"
-                placeholder="Address Line 1"
-              />
-            </div>
-            <div className="col mb-3">
-              <input
-                type="text"
-                name="addressLine2"
-                placeholder="Address Line 2"
-                ref={register}
-              />
-            </div>
+                  {/* address */}
+                  <div className="form-group row">
+                    <div className="col-sm-6">
+                      Address
+                      <Field
+                        name="addressDto.addressLine1"
+                        placeholder="Address Line 1"
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      Address (Line 2)
+                      <Field
+                        name="addressDto.addressLine2"
+                        placeholder="Address Line 2"
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-sm">
+                      <Field name="addressDto.city" placeholder="City" />
+                    </div>
+                    <div className="col-sm">
+                      <Field name="addressDto.state" placeholder="State" />
+                    </div>
+                    <div className="col-sm">
+                      <Field name="addressDto.zipCode" placeholder="Zip code" />
+                    </div>
+                    <div className="col-sm">
+                      <Field name="addressDto.country" placeholder="Country" />
+                    </div>
+                  </div>
+                  <div className="row col-sm">
+                    <h5>Rental Type</h5>
+                  </div>
+                  <div className="row">
+                    <Field
+                      as="select"
+                      name="rentalTypeID"
+                      className="rentalSelect"
+                    >
+                      {rentalType.map((rental, index) => (
+                        <option value={rental.id}>{rental.name}</option>
+                      ))}
+                    </Field>
+                  </div>
+                  <div className="row">
+                    <h5 className="mt-3 col-sm">Amenities</h5>
+                  </div>
+                  <div className="row">
+                    {amnities.map((amenity, index) => {
+                      if (amenity.amenityType.name === "RENTAL_AMENITY") {
+                        return (
+                          <FormikCheckbox
+                            name="amenitiesIDs"
+                            value={amenity.id}
+                            amenity={amenity}
+                            key={index}
+                            className="form-check form-check-inline"
+                          />
+                        );
+                      }
+                    })}
+                  </div>
 
-            <div className="col mb-3">
-              <input
-                type="text"
-                name="city"
-                placeholder="City"
-                ref={register}
-              />
-            </div>
-          </div>
+                  {/* Rooms */}
+                  <div className="row">
+                    <div className="col-sm">
+                      <h5 className="mt-3">Room Type</h5>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-sm">
+                      <FieldArray name="roomsDtoList">
+                        {({ push }) => (
+                          <div>
+                            {values.roomsDtoList.map((room, index) => {
+                              const name = `roomsDtoList[${index}].name`;
+                              const roomDescription = `roomsDtoList[${index}].description`;
+                              const roomPrice = `roomsDtoList[${index}].price`;
+                              const roomAmenity = `roomsDtoList[${index}].amenitiesIDs`;
+                              const bedIds = `roomsDtoList[${index}].bedsIDs`;
+                              const roomType = `roomsDtoList[${index}].roomTypeID`;
 
-          <div className="form-row">
-            <div className="col mb-3">
-              <input
-                type="text"
-                name="state"
-                placeholder="State"
-                ref={register}
-              />
-            </div>
-            <div className="col mb-3">
-              <input
-                type="text"
-                name="zipCode"
-                placeholder="ZipCode"
-                ref={register}
-              />
-            </div>
-            <div className="col mb-3">
-              <input
-                type="text"
-                name="country"
-                placeholder="Country"
-                ref={register}
-              />
+                              return (
+                                <div key={index}>
+                                  <div className="form-group row">
+                                    <div className="col-sm-6">
+                                      <Field
+                                        type="text"
+                                        name={name}
+                                        placeholder="Room Name"
+                                      />
+                                    </div>
+                                    <div className="col-sm-6">
+                                      <Field
+                                        type="text"
+                                        name={roomPrice}
+                                        placeholder="Room Price"
+                                      />
+                                    </div>
+                                  </div>
+                                  <Field
+                                    type="text"
+                                    name={roomDescription}
+                                    placeholder="Room Description"
+                                  />
+
+                                  <div className="row">
+                                    {amnities.map((amenity, index) => {
+                                      if (
+                                        amenity.amenityType.name ===
+                                        "ROOM_AMENITY"
+                                      ) {
+                                        return (
+                                          <FormikCheckbox
+                                            name={roomAmenity}
+                                            value={amenity.id}
+                                            amenity={amenity}
+                                            key={index}
+                                            className="form-check form-check-inline"
+                                          />
+                                        );
+                                      }
+                                    })}
+                                  </div>
+                                  <div className="row ">
+                                    <h5 className="mt-10">
+                                      Please choose type of bed
+                                    </h5>
+                                  </div>
+                                  <div className="row">
+                                    {bedType.map((bed, index) => (
+                                      <div className="row" key={index}>
+                                        <div className="col-sm">
+                                          <FormikCheckbox
+                                            name={bedIds}
+                                            value={bed.id}
+                                            amenity={bed}
+                                            key={index}
+                                            className="form-check form-check-inline"
+                                          />
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                  <div className="row">
+                                    <h5>Please choose room type</h5>
+                                  </div>
+                                  <div className="row">
+                                    {roomTypes.map((room, index) => (
+                                      <div className="row" key={index}>
+                                        <div className="col-sm">
+                                          <FormikCheckbox
+                                            name={roomType}
+                                            value={room.id}
+                                            amenity={room}
+                                            key={index}
+                                            className="form-check form-check-inline"
+                                          />
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              );
+                            })}
+
+                            <button
+                              className="button"
+                              type="button"
+                              onClick={() =>
+                                push({
+                                  name: "",
+                                  description: "",
+                                  price: "",
+                                  amenitiesIDs: [],
+                                  bedsIDs: [],
+                                  roomTypeID: "",
+                                })
+                              }
+                            >
+                              Add Another Room
+                            </button>
+                          </div>
+                        )}
+                      </FieldArray>
+                    </div>
+                  </div>
+
+                  <button type="submit">Submit</button>
+                  <pre>{JSON.stringify(values, null, 2)}</pre>
+                </Form>
+              </div>
             </div>
           </div>
-          <div className="form-row">
-            <div className="col mb-3">
-              <input
-                type="submit"
-                value="Add Rental"
-                onClick={handleSubmit(onSubmit)}
-              />
-            </div>
-          </div>
-        </div>
-      </form>
+        )}
+      </Formik>
     </div>
   );
 }
