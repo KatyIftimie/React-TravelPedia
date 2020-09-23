@@ -22,8 +22,7 @@ export default function FormikCheckbox(props) {
               }
             }}
           />
-
-          {props.amenity.name}
+          {props.amenity.name} {props.amenity.type}
         </label>
       )}
     </Field>

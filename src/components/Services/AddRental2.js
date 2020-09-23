@@ -8,7 +8,7 @@ export default function AddRental2() {
   const [amnities, setAmnities] = useState([]);
   const [roomTypes, setRoomType] = useState([]);
   const [bedType, setBedType] = useState([]);
-  const [bedsNo, setBedsNo] = useState(0);
+  const [bedsNo, setBedsNo] = useState([]);
 
   useEffect(() => {
     async function fetchAmenities() {
@@ -98,7 +98,7 @@ export default function AddRental2() {
                   <div className="form-group row">
                     <div className="col-sm-6">
                       Check In
-                      <Field name="checkInType" type="date" />
+                      <Field name="checkInTime" type="date" />
                     </div>
                     <div className="col-sm-6">
                       Check Out
@@ -225,21 +225,29 @@ export default function AddRental2() {
                                       <input
                                         type="number"
                                         placeholder="Please Choose Number of Beds"
+                                        min="0"
                                         onChange={(e) =>
-                                          setBedsNo(e.target.value)
+                                          setBedsNo([...bedsNo, e.target.value])
                                         }
                                       />
                                     </div>
-                                    <div className="col-sm-4">
-                                      <Field as="select" name={bedIds}>
-                                        {bedType.map((bed, index) => (
-                                          <option value={bed.id} key={index}>
-                                            {" "}
-                                            {bed.type}
-                                          </option>
-                                        ))}
-                                      </Field>
-                                    </div>
+                                    {bedsNo.map((bed, index) =>
+                                      bedType.map((amenity, index) => {
+                                        return (
+                                          <div className="row">
+                                            <div className="col-sm">
+                                              <FormikCheckbox
+                                                name={bedIds}
+                                                value={amenity.id}
+                                                amenity={amenity}
+                                                key={index}
+                                                className="form-check form-check-inline"
+                                              />
+                                            </div>
+                                          </div>
+                                        );
+                                      })
+                                    )}
                                   </div>
                                 </div>
                               );
