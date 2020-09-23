@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from "react";
-<<<<<<< HEAD
-import styled from "styled-components";
-=======
->>>>>>> trialforrental
 
 export default function CountryDetails(props) {
   const [details, setDetails] = useState([]);

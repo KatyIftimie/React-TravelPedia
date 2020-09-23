@@ -14,16 +14,6 @@ export default function NavbarLayout() {
 
   const USER_API = "http://localhost:8080/api/v1/auth/get-user/";
 
-<<<<<<< HEAD
-  const getUserDetails = useCallback(() => {
-    axios.get(USER_API + userEmail).then((res) => {
-      console.log(res.data);
-      setDetails(res.data);
-    });
-  }, [userEmail]);
-
-=======
->>>>>>> trialforrental
   useEffect(() => {
     if (window.sessionStorage.getItem("login")) {
       setUserEmail(window.sessionStorage.getItem("login"));
@@ -62,14 +52,6 @@ export default function NavbarLayout() {
             ) : (
               <Nav.Link href="/register"> Register </Nav.Link>
             )}
-<<<<<<< HEAD
-
-            {/* 
-             <Nav.Link href="#">
-              {userIsLogin ? "Welcome " + details.lastName : null}
-            </Nav.Link> */}
-=======
->>>>>>> trialforrental
 
             {userIsLogin && details && details.type.name === "HOST" ? (
               <Nav.Link href="/add-rental"> Add Rental</Nav.Link>

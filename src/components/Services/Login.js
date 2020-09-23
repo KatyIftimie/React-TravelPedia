@@ -10,10 +10,7 @@ export default function Login() {
   const { register, handleSubmit } = useForm({});
   const [logInMsj, setLogInMsj] = useState("");
   const [isLoggedIn, setIsLogged] = useState(false);
-<<<<<<< HEAD:src/components/Services/Login.js
-=======
   const [hasError, setHasError] = useState(false);
->>>>>>> trialforrental:src/components/countries/Login.js
   const history = useHistory();
 
   const LOGIN_API = "http://localhost:8080/api/v1/auth/login";
