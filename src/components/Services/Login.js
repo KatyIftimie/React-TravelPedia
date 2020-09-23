@@ -4,11 +4,16 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "../../style/RegisterForm.css";
 import axios from "axios";
+import NotFound from "./NotFound";
 
 export default function Login() {
   const { register, handleSubmit } = useForm({});
   const [logInMsj, setLogInMsj] = useState("");
   const [isLoggedIn, setIsLogged] = useState(false);
+<<<<<<< HEAD:src/components/Services/Login.js
+=======
+  const [hasError, setHasError] = useState(false);
+>>>>>>> trialforrental:src/components/countries/Login.js
   const history = useHistory();
 
   const LOGIN_API = "http://localhost:8080/api/v1/auth/login";
@@ -19,7 +24,7 @@ export default function Login() {
       .then((res) => {
         if (res.status === 200) {
           setIsLogged(true);
-          setLogInMsj(res.data);
+          setLogInMsj("Success");
           window.sessionStorage.setItem("login", user.email);
           setTimeout(() => {
             history.push("/");
@@ -27,9 +32,13 @@ export default function Login() {
         }
       })
       .catch((err) => {
-        setLogInMsj(err.response.data);
+        setHasError(true);
       });
   };
+
+  if (hasError) {
+    return <NotFound />;
+  }
 
   return (
     <div className="container">

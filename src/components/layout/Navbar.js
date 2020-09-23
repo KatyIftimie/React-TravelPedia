@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Form, Button, FormControl } from "react-bootstrap";
-import { useCallback } from "react";
+
 import logo from "../../img/logo.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -14,6 +14,7 @@ export default function NavbarLayout() {
 
   const USER_API = "http://localhost:8080/api/v1/auth/get-user/";
 
+<<<<<<< HEAD
   const getUserDetails = useCallback(() => {
     axios.get(USER_API + userEmail).then((res) => {
       console.log(res.data);
@@ -21,15 +22,21 @@ export default function NavbarLayout() {
     });
   }, [userEmail]);
 
+=======
+>>>>>>> trialforrental
   useEffect(() => {
     if (window.sessionStorage.getItem("login")) {
-      setIsLogin(true);
       setUserEmail(window.sessionStorage.getItem("login"));
-      getUserDetails();
+      axios.get(USER_API + userEmail).then((res) => {
+        setDetails(res.data);
+        setIsLogin(true);
+        window.sessionStorage.setItem("userId", res.data.id);
+        console.log(res.data);
+      });
     } else {
       setIsLogin(false);
     }
-  }, [getUserDetails]);
+  }, [userEmail, userIsLogin]);
 
   const handleClick = () => {
     setQuery(title);
@@ -55,11 +62,14 @@ export default function NavbarLayout() {
             ) : (
               <Nav.Link href="/register"> Register </Nav.Link>
             )}
+<<<<<<< HEAD
 
             {/* 
              <Nav.Link href="#">
               {userIsLogin ? "Welcome " + details.lastName : null}
             </Nav.Link> */}
+=======
+>>>>>>> trialforrental
 
             {userIsLogin && details && details.type.name === "HOST" ? (
               <Nav.Link href="/add-rental"> Add Rental</Nav.Link>
@@ -85,7 +95,6 @@ export default function NavbarLayout() {
     </>
   );
 }
-
 const logoStyle = {
   width: "45%",
   height: "45%",

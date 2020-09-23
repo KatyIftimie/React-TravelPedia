@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 export default function RegisterUser() {
-  const { register, errors, handleSubmit, watch, formState } = useForm({});
+  const { register, errors, handleSubmit, watch } = useForm({});
 
   const [registrationMessage, setRegistrationMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -17,6 +17,7 @@ export default function RegisterUser() {
   password.current = watch("password", "");
 
   const onSubmit = (user) => {
+    console.log(user);
     axios
       .post(REGISTER_API, user)
       .then((res) => {
@@ -29,7 +30,7 @@ export default function RegisterUser() {
         }
       })
       .catch((err) => {
-        setRegistrationMessage(err.response.data);
+        console.log(err);
       });
   };
 
