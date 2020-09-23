@@ -95,6 +95,8 @@ body > #root {
 }
 
 .rentalTable {
+  border-radius: 5px;
   width: 80% !important;
-  justify-content: center;
+  margin: 0px auto;
+  float: none;
 }

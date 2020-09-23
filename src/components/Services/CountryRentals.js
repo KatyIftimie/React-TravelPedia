@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import RentalsCard from "../layout/RentalsCard";
+import "../../style/CountryRentals.css";
 
 export default function CountryRentals(props) {
   const [rentals, setRentals] = useState([]);
+  const [numbersOfItems, setNumberofItems] = useState(4);
 
   const countryname = props.match.params.name;
 
@@ -18,23 +21,25 @@ export default function CountryRentals(props) {
         console.log("fara rentals");
       }
     }
-
     fetchData();
   }, [countryname]);
 
+  const hostelRental = rentals.filter(
+    (rental) => rental.type.name === "HOSTEL"
+  );
+
+  const suiteRental = rentals.filter((rental) => rental.type.name === "SUITE");
+
+  console.log(hostelRental);
+
   return (
     <div>
-      <h1 className="text-center">Places to Rent in Romania</h1>
-      <table class="table table-bordered rentalTable">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-          </tr>
-        </thead>
-      </table>
+      <h1 className="text-center m-5">Places to Rent in Romania</h1>
+
+      {rentals.map((rental, index) => {
+        return <RentalsCard rental={rental} key={index} />;
+      })}
+      {/* {rentalsToShow.length ? rentalsToShow : "Fetching Data..."} */}
     </div>
   );
 }

@@ -9,11 +9,11 @@ form {
   margin: 0 auto;
 }
 
-p {
+form p {
   color: #bf1650;
 }
 
-p::before {
+form p::before {
   display: inline;
   content: "⚠ ";
 }
