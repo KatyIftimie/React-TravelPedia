@@ -9,7 +9,6 @@ import Footer from "./components/layout/Footer";
 import RegisterUser from "./components/Services/RegisterUser";
 import Login from "./components/Services/Login";
 import Logout from "./components/Services/Logout";
-import AddRental from "./components/Services/AddRental";
 import AddRental2 from "./components/Services/AddRental2.js";
 
 function App() {

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 export default function RegisterUser() {
-  const { register, errors, handleSubmit, watch, formState } = useForm({});
+  const { register, errors, handleSubmit, watch } = useForm({});
 
   const [registrationMessage, setRegistrationMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);

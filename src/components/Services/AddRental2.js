@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
 import FormikCheckbox from "./FormikCheckbox";
+import axios from "axios";
 
 export default function AddRental2() {
   const API_URL = "http://localhost:8080/api/v1";
+  const RENTAL_API_URL = "http://localhost:8080/api/v1/rentals";
 
   const [amnities, setAmnities] = useState([]);
   const [roomTypes, setRoomType] = useState([]);
   const [bedType, setBedType] = useState([]);
-  const [bedsNo, setBedsNo] = useState([]);
+  const [rentalType, setRentalType] = useState([]);
 
   useEffect(() => {
     async function fetchAmenities() {
@@ -42,11 +44,26 @@ export default function AddRental2() {
       }
     }
 
+    async function fetchRentalTypes() {
+      let response = await fetch(API_URL + "/rentals/rental-types", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      let data = await response.json();
+      if (response.ok) {
+        setRentalType(data);
+      } else {
+        console.log("nu rental type");
+      }
+    }
+
     fetchAmenities();
     fetchRoomTypes();
     fetchBeds();
-  }, [bedsNo]);
-  console.log(bedType);
+    fetchRentalTypes();
+  }, []);
 
   return (
     <div>
@@ -57,6 +74,8 @@ export default function AddRental2() {
           description: "",
           checkInTime: "",
           checkOutTime: "",
+          rentalTypeID: "",
+          hostUserID: window.sessionStorage.getItem("userId"),
           addressDto: {
             addressLine1: "",
             addressLine2: "",
@@ -79,6 +98,11 @@ export default function AddRental2() {
         }}
         onSubmit={(values) => {
           // same shape as initial values
+          axios.post(RENTAL_API_URL, values).then((res) => {
+            if (res.status === 200) {
+              console.log("succes");
+            }
+          });
           console.log(values);
         }}
       >
@@ -98,14 +122,14 @@ export default function AddRental2() {
                   <div className="form-group row">
                     <div className="col-sm-6">
                       Check In
-                      <Field name="checkInTime" type="date" />
+                      <Field name="checkInTime" type="datetime-local" />
                     </div>
                     <div className="col-sm-6">
                       Check Out
                       <Field
                         name="checkOutTime"
                         placeholder="Name"
-                        type="date"
+                        type="datetime-local"
                       />
                     </div>
                   </div>
@@ -140,6 +164,20 @@ export default function AddRental2() {
                     <div className="col-sm">
                       <Field name="addressDto.country" placeholder="Country" />
                     </div>
+                  </div>
+                  <div className="row col-sm">
+                    <h5>Rental Type</h5>
+                  </div>
+                  <div className="row">
+                    <Field
+                      as="select"
+                      name="rentalTypeID"
+                      className="rentalSelect"
+                    >
+                      {rentalType.map((rental, index) => (
+                        <option value={rental.id}>{rental.name}</option>
+                      ))}
+                    </Field>
                   </div>
                   <div className="row">
                     <h5 className="mt-3 col-sm">Amenities</h5>
@@ -177,6 +215,7 @@ export default function AddRental2() {
                               const roomPrice = `roomsDtoList[${index}].price`;
                               const roomAmenity = `roomsDtoList[${index}].amenitiesIDs`;
                               const bedIds = `roomsDtoList[${index}].bedsIDs`;
+                              const roomType = `roomsDtoList[${index}].roomTypeID`;
 
                               return (
                                 <div key={index}>
@@ -220,34 +259,43 @@ export default function AddRental2() {
                                       }
                                     })}
                                   </div>
-                                  <div className="row mt-3">
-                                    <div className="col-sm-4">
-                                      <input
-                                        type="number"
-                                        placeholder="Please Choose Number of Beds"
-                                        min="0"
-                                        onChange={(e) =>
-                                          setBedsNo([...bedsNo, e.target.value])
-                                        }
-                                      />
-                                    </div>
-                                    {bedsNo.map((bed, index) =>
-                                      bedType.map((amenity, index) => {
-                                        return (
-                                          <div className="row">
-                                            <div className="col-sm">
-                                              <FormikCheckbox
-                                                name={bedIds}
-                                                value={amenity.id}
-                                                amenity={amenity}
-                                                key={index}
-                                                className="form-check form-check-inline"
-                                              />
-                                            </div>
-                                          </div>
-                                        );
-                                      })
-                                    )}
+                                  <div className="row ">
+                                    <h5 className="mt-10">
+                                      Please choose type of bed
+                                    </h5>
+                                  </div>
+                                  <div className="row">
+                                    {bedType.map((bed, index) => (
+                                      <div className="row" key={index}>
+                                        <div className="col-sm">
+                                          <FormikCheckbox
+                                            name={bedIds}
+                                            value={bed.id}
+                                            amenity={bed}
+                                            key={index}
+                                            className="form-check form-check-inline"
+                                          />
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                  <div className="row">
+                                    <h5>Please choose room type</h5>
+                                  </div>
+                                  <div className="row">
+                                    {roomTypes.map((room, index) => (
+                                      <div className="row" key={index}>
+                                        <div className="col-sm">
+                                          <FormikCheckbox
+                                            name={roomType}
+                                            value={room.id}
+                                            amenity={room}
+                                            key={index}
+                                            className="form-check form-check-inline"
+                                          />
+                                        </div>
+                                      </div>
+                                    ))}
                                   </div>
                                 </div>
                               );

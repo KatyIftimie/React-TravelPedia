@@ -20,6 +20,8 @@ export default function NavbarLayout() {
       axios.get(USER_API + userEmail).then((res) => {
         setDetails(res.data);
         setIsLogin(true);
+        window.sessionStorage.setItem("userId", res.data.id);
+        console.log(res.data);
       });
     } else {
       setIsLogin(false);
@@ -75,7 +77,6 @@ export default function NavbarLayout() {
     </>
   );
 }
-
 const logoStyle = {
   width: "45%",
   height: "45%",
