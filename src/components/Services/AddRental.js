@@ -76,6 +76,9 @@ export default function AddRental2() {
           checkOutTime: "",
           rentalTypeID: "",
           hostUserID: window.sessionStorage.getItem("userId"),
+          // images: [
+          //   { filename: "", originalFileName: "", isMainRentalImage: "true" },
+          // ],
           addressDto: {
             addressLine1: "",
             addressLine2: "",
@@ -97,6 +100,7 @@ export default function AddRental2() {
           ],
         }}
         onSubmit={(values) => {
+          console.log(values);
           // same shape as initial values
           axios.post(RENTAL_API_URL, values).then((res) => {
             if (res.status === 200) {
@@ -106,11 +110,11 @@ export default function AddRental2() {
           console.log(values);
         }}
       >
-        {({ values }) => (
+        {({ values, setFieldValue }) => (
           <div className="container">
             <div className="row">
               <div className="col-md-10 mx-auto">
-                <Form className="addRentalForm">
+                <form className="addRentalForm">
                   <div className="form-group row">
                     <div className="col-sm-6">
                       <Field name="name" placeholder="Name" />
@@ -175,7 +179,9 @@ export default function AddRental2() {
                       className="rentalSelect"
                     >
                       {rentalType.map((rental, index) => (
-                        <option value={rental.id}>{rental.name}</option>
+                        <option value={rental.id} key={index}>
+                          {rental.name}
+                        </option>
                       ))}
                     </Field>
                   </div>
@@ -199,11 +205,7 @@ export default function AddRental2() {
                   </div>
 
                   {/* Rooms */}
-                  <div className="row">
-                    <div className="col-sm">
-                      <h5 className="mt-3">Room Type</h5>
-                    </div>
-                  </div>
+
                   <div className="form-group row">
                     <div className="col-sm">
                       <FieldArray name="roomsDtoList">
@@ -219,6 +221,9 @@ export default function AddRental2() {
 
                               return (
                                 <div key={index}>
+                                  <div className="row">
+                                    <h5 className="mt-3 ">Room Type</h5>
+                                  </div>
                                   <div className="form-group row">
                                     <div className="col-sm-6">
                                       <Field
@@ -259,15 +264,15 @@ export default function AddRental2() {
                                       }
                                     })}
                                   </div>
-                                  <div className="row ">
-                                    <h5 className="mt-10">
+                                  <div className="row mx-auto">
+                                    <h5 className="text-capitalize mx-auto m-5">
                                       Please choose type of bed
                                     </h5>
                                   </div>
                                   <div className="row">
                                     {bedType.map((bed, index) => (
-                                      <div className="row" key={index}>
-                                        <div className="col-sm">
+                                      <div className="row mx-auto" key={index}>
+                                        <div className="col-sm mx-auto text-center">
                                           <FormikCheckbox
                                             name={bedIds}
                                             value={bed.id}
@@ -280,12 +285,14 @@ export default function AddRental2() {
                                     ))}
                                   </div>
                                   <div className="row">
-                                    <h5>Please choose room type</h5>
+                                    <h5 className="mx-auto text-capitalize m-5">
+                                      Please choose room type
+                                    </h5>
                                   </div>
-                                  <div className="row">
+                                  <div className="row mx-auto">
                                     {roomTypes.map((room, index) => (
-                                      <div className="row" key={index}>
-                                        <div className="col-sm">
+                                      <div className="row mx-auto" key={index}>
+                                        <div className="col-sm mx-auto">
                                           <FormikCheckbox
                                             name={roomType}
                                             value={room.id}
@@ -298,6 +305,21 @@ export default function AddRental2() {
                                     ))}
                                   </div>
                                 </div>
+                              );
+                            })}
+                            <h4 className="m-5">
+                              {" "}
+                              You added {
+                                values.roomsDtoList.length
+                              } room/s:{" "}
+                            </h4>
+
+                            {values.roomsDtoList.map((room, index) => {
+                              return (
+                                <h5 className="roomsParagraph" key={index}>
+                                  {" "}
+                                  {room.name}{" "}
+                                </h5>
                               );
                             })}
 
@@ -322,10 +344,27 @@ export default function AddRental2() {
                       </FieldArray>
                     </div>
                   </div>
+                  <div className="form-group">
+                    {/* <label>File upload</label>
+                    <input
+                      name="images"
+                      type="file"
+                      onChange={(event) => {
+                        setFieldValue(
+                          "images[0].filename",
+                          event.currentTarget.files[0].name
+                        );
+                        setFieldValue(
+                          "images[0].originalFileName",
+                          event.currentTarget.files[0].name
+                        );
+                      }}
+                    /> */}
+                  </div>
 
                   <button type="submit">Submit</button>
                   <pre>{JSON.stringify(values, null, 2)}</pre>
-                </Form>
+                </form>
               </div>
             </div>
           </div>
@@ -334,3 +373,12 @@ export default function AddRental2() {
     </div>
   );
 }
+
+const dropzoneStyle = {
+  width: "100%",
+  height: "auto",
+  borderWidth: 2,
+  borderColor: "rgb(102, 102, 102)",
+  borderStyle: "dashed",
+  borderRadius: 5,
+};

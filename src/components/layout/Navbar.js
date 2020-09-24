@@ -17,15 +17,23 @@ export default function NavbarLayout() {
   useEffect(() => {
     if (window.sessionStorage.getItem("login")) {
       setUserEmail(window.sessionStorage.getItem("login"));
-      axios.get(USER_API + userEmail).then((res) => {
-        setDetails(res.data);
-        setIsLogin(true);
-        window.sessionStorage.setItem("userId", res.data.id);
-      });
+      axios
+        .get(USER_API + userEmail, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:3000",
+          },
+        })
+        .then((res) => {
+          setDetails(res.data);
+          setIsLogin(true);
+          window.sessionStorage.setItem("userId", res.data.id);
+        });
     } else {
       setIsLogin(false);
     }
-  }, [userEmail, userIsLogin]);
+  }, [userEmail]);
 
   const handleClick = () => {
     setQuery(title);

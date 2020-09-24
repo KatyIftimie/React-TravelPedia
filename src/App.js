@@ -13,7 +13,7 @@ import AddRental from "./components/Services/AddRental.js";
 
 function App() {
   return (
-    <>
+    <div>
       <NavbarLayout />
       <Switch>
         <Route exact path="/" component={Home}></Route>
@@ -24,7 +24,7 @@ function App() {
         <Route path="/logout" component={Logout}></Route>
       </Switch>
       <Footer />
-    </>
+    </div>
   );
 }
 
