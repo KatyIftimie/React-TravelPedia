@@ -34,7 +34,7 @@ export default function CountryRentals(props) {
 
   return (
     <div>
-      <h1 className="text-center m-5">Places to Rent in Romania</h1>
+      <h1 className="text-center m-5">Places to Rent in {countryname}</h1>
 
       {rentals.map((rental, index) => {
         return <RentalsCard rental={rental} key={index} />;

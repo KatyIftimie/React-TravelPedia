@@ -1,0 +1,200 @@
+[
+    {
+        "name": "Studio - Old City Brasov",
+        "description": "Confortabil și elegant, acest apartament cu un dormitor este situat în centrul orașului, aproape de toate punctele turistice.",
+        "checkInTime": "2020-09-22T16:20:00Z",
+        "checkOutTime": "2020-09-30T16:19:00Z",
+        "rentalTypeID": "6",
+        "hostUserID": "1",
+        "addressDto": {
+            "addressLine1": "Str. Calea Mărășești, nr. 6",
+            "addressLine2": "Flat 1",
+            "city": "Brasov",
+            "state": "Brasov",
+            "zipCode": "601155",
+            "country": "Romania"
+        },
+        "amenitiesIDs": [
+            3,
+            7,
+            10,
+            6,
+            1
+        ],
+        "roomsDtoList": [
+            {
+                "name": "Studio room",
+                "description": " Studiou cu o cameră cu o zonă de bucătărie",
+                "price": "143",
+                "amenitiesIDs": [
+                    2,
+                    4,
+                    8
+                ],
+                "bedsIDs": [
+                    2
+                ],
+                "roomTypeID": "2"
+            }
+        ]
+    },
+    {
+        "name": " Hotel Carpathia",
+        "description": "Situat in centrul statiunii, la cateva minute de mers pe jos de parcul orasului Sinaia si de statia de telecabina, Hotelul Carpathia are un cadru intim, primitor unde modernul se impleteste foarte bine cu inalta calitate a serviciilor, fiind cel mai luxos de pe Valea Prahovei si nu numai.   ",
+        "checkInTime": "2020-09-22T16:20:00Z",
+        "checkOutTime": "2020-09-30T16:19:00Z",
+        "rentalTypeID": "4",
+        "hostUserID": "1",
+        "addressDto": {
+            "addressLine1": "Str. Sinaia",
+            "addressLine2": "21",
+            "city": "Sinaia",
+            "state": "Valea Prahovei",
+            "zipCode": "601155",
+            "country": "Romania"
+        },
+        "amenitiesIDs": [
+            3,
+            7,
+            10,
+            6,
+            1
+        ],
+        "roomsDtoList": [
+            {
+                "name": "room 123",
+                "description": "Hotel Carpathia pune la dispozitia turistilor 70 de camere spatioase, mobilate elegant si dotate cu accesorii de lux, fiind unul dintre cele mai luxoase complexe hoteliere de pe Valea Prahovei. Toate spatiile de cazare sunt dotate la standarde internationale si dispun de baie individuala, aer conditionat, TV cu pachet de peste 80 programe, internet wireless de mare viteza, telefon, minibar, halat de baie si papuci, uscator de par.",
+                "price": "143",
+                "amenitiesIDs": [
+                    2,
+                    4,
+                    8
+                ],
+                "bedsIDs": [
+                    2
+                ],
+                "roomTypeID": "2"
+            },
+            {
+                "name": "room 732",
+                "description": "Hotel Carpathia pune la dispozitia turistilor 70 de camere spatioase, mobilate elegant si dotate cu accesorii de lux, fiind unul dintre cele mai luxoase complexe hoteliere de pe Valea Prahovei. Toate spatiile de cazare sunt dotate la standarde internationale si dispun de baie individuala, aer conditionat, TV cu pachet de peste 80 programe, internet wireless de mare viteza, telefon, minibar, halat de baie si papuci, uscator de par.",
+                "price": "133",
+                "amenitiesIDs": [
+                    4,
+                    9,
+                    5,
+                    8,
+                    2
+                ],
+                "bedsIDs": [
+                    3
+                ],
+                "roomTypeID": "4"
+            }
+        ]
+    },
+    {
+        "name": "Hotel Duke Romana",
+        "description": "Hotel Duke Romana is located in the capital city, a few steps from Romana Square, and offers accommodation with free WiFi and easy access to the main attractions of the city.",
+        "checkInTime": "2020-09-22T16:20:00Z",
+        "checkOutTime": "2020-09-30T16:19:00Z",
+        "rentalTypeID": "4",
+        "hostUserID": "1",
+        "addressDto": {
+            "addressLine1": "Bulevardul Dacia 33",
+            "addressLine2": "Flat 1",
+            "city": "Bucuresti",
+            "state": "",
+            "zipCode": "601155",
+            "country": "Romania"
+        },
+        "amenitiesIDs": [
+            5,
+            10,
+            6,
+            1
+        ],
+        "roomsDtoList": [
+            {
+                "name": "room 1",
+                "description": "All rooms are equipped with air conditioning, TV and private bathroom.",
+                "price": "143",
+                "amenitiesIDs": [
+                    2,
+                    4,
+                    8
+                ],
+                "bedsIDs": [
+                    2
+                ],
+                "roomTypeID": "3"
+            },
+            {
+                "name": "room 2",
+                "description": "All rooms are equipped with air conditioning, TV and private bathroom.",
+                "price": "133",
+                "amenitiesIDs": [
+                    4,
+                    9,
+                    5,
+                    8,
+                    2
+                ],
+                "bedsIDs": [
+                    3
+                ],
+                "roomTypeID": "1"
+            }
+        ]
+    },
+    {
+        "name": "Europa Royale Bucharest",
+        "description": "The hotel Europa Royale Bucharest is housed in a 19th-century building in the heart of Bucharest. ",
+        "checkInTime": "2020-09-22T16:20:00Z",
+        "checkOutTime": "2020-09-30T16:19:00Z",
+        "rentalTypeID": "4",
+        "hostUserID": "1",
+        "addressDto": {
+            "addressLine1": "Bulevardul Dacia, nr. 60",
+            "addressLine2": "Flat 1",
+            "city": "Bucharest",
+            "state": "",
+            "zipCode": "601155",
+            "country": "Romania"
+        },
+        "amenitiesIDs": [
+            7,
+            6,
+            1
+        ],
+        "roomsDtoList": [
+            {
+                "name": "Presidential suit",
+                "description": "In this hotel you can book rooms by hours. Free WiFi is available throughout the building.",
+                "price": "143",
+                "amenitiesIDs": [
+                    2,
+                    4,
+                    8,
+                    1
+                ],
+                "bedsIDs": [
+                    1
+                ],
+                "roomTypeID": "2"
+            },
+            {
+                "name": "Regular room",
+                "description": "In this hotel you can book rooms by hours. Free WiFi is available throughout the building.",
+                "price": "210",
+                "amenitiesIDs": [
+                    2
+                ],
+                "bedsIDs": [
+                    3
+                ],
+                "roomTypeID": "4"
+            }
+        ]
+    }
+]

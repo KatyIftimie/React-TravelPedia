@@ -10,6 +10,7 @@ import RegisterUser from "./components/Services/RegisterUser";
 import Login from "./components/Services/Login";
 import Logout from "./components/Services/Logout";
 import AddRental from "./components/Services/AddRental.js";
+import RentalView from "./components/Services/RentalView";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/add-rental" component={AddRental}></Route>
         <Route path="/login" component={Login}></Route>
         <Route path="/logout" component={Logout}></Route>
+        <Route path="/rental-details/:id" component={RentalView}></Route>
       </Switch>
       <Footer />
     </>
