@@ -111,6 +111,7 @@ export default function AddRental2() {
       >
         {({ values, setFieldValue }) => (
           <div className="container">
+            {console.log(values.amenitiesIDs)}
             <div className="row">
               <div className="col-md-10 mx-auto">
                 <Form className="addRentalForm">
@@ -262,14 +263,14 @@ export default function AddRental2() {
                                       }
                                     })}
                                   </div>
-                                  <div className="row ">
-                                    <h5 className="mt-10">
+                                  <div className="row mx-auto ">
+                                    <h5 className="mt-10 mx-auto m-5">
                                       Please choose type of bed
                                     </h5>
                                   </div>
                                   <div className="row">
                                     {bedType.map((bed, index) => (
-                                      <div className="row" key={index}>
+                                      <div className="row mx-auto" key={index}>
                                         <div className="col-sm">
                                           <FormikCheckbox
                                             name={bedIds}
@@ -282,12 +283,14 @@ export default function AddRental2() {
                                       </div>
                                     ))}
                                   </div>
-                                  <div className="row">
-                                    <h5>Please choose room type</h5>
+                                  <div className="row ">
+                                    <h5 className="mx-auto m-5 ">
+                                      Please choose room type
+                                    </h5>
                                   </div>
                                   <div className="row">
                                     {roomTypes.map((room, index) => (
-                                      <div className="row" key={index}>
+                                      <div className="row mx-auto" key={index}>
                                         <div className="col-sm">
                                           <FormikCheckbox
                                             name={roomType}
