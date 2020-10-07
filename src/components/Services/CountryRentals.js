@@ -4,7 +4,6 @@ import "../../style/CountryRentals.css";
 
 export default function CountryRentals(props) {
   const [rentals, setRentals] = useState([]);
-  const [numbersOfItems, setNumberofItems] = useState(4);
 
   const countryname = props.match.params.name;
 
@@ -28,18 +27,18 @@ export default function CountryRentals(props) {
     (rental) => rental.type.name === "HOSTEL"
   );
 
-  const suiteRental = rentals.filter((rental) => rental.type.name === "SUITE");
-
   console.log(hostelRental);
 
   return (
-    <div>
+    <div className="container countryRentals">
       <h1 className="text-center m-5">Places to Rent in {countryname}</h1>
-
-      {rentals.map((rental, index) => {
-        return <RentalsCard rental={rental} key={index} />;
-      })}
-      {/* {rentalsToShow.length ? rentalsToShow : "Fetching Data..."} */}
+      <div className="row">
+        {rentals.map((rental, index) => {
+          console.log(rental);
+          return <RentalsCard rental={rental} key={index} />;
+        })}
+        {/* {rentalsToShow.length ? rentalsToShow : "Fetching Data..."} */}
+      </div>
     </div>
   );
 }

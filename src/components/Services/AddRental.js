@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
 import FormikCheckbox from "./FormikCheckbox";
+
 import axios from "axios";
 
 export default function AddRental2() {
@@ -11,6 +12,18 @@ export default function AddRental2() {
   const [roomTypes, setRoomType] = useState([]);
   const [bedType, setBedType] = useState([]);
   const [rentalType, setRentalType] = useState([]);
+  const [pictures, setPictures] = useState({
+    file1: "",
+    file2: "",
+    file3: "",
+    file4: "",
+    file5: "",
+  });
+
+  const onChangePicture = (e) => {
+    console.log("picture: ", pictures);
+    setPictures([...pictures, e.target.files[0]]);
+  };
 
   useEffect(() => {
     async function fetchAmenities() {
@@ -67,10 +80,10 @@ export default function AddRental2() {
 
   return (
     <div>
-      <h5 className="text-center">Add New Rental</h5>
       <Formik
         initialValues={{
           name: "",
+          files: null,
           description: "",
           checkInTime: "",
           checkOutTime: "",
@@ -100,20 +113,28 @@ export default function AddRental2() {
           // same shape as initial values
           axios.post(RENTAL_API_URL, values).then((res) => {
             if (res.status === 200) {
-              console.log("succes");
+              console.log(res);
+              axios
+                .post(
+                  `http://localhost:8080/api/v1/rentals/${res.data.new_rental_id}/images`,
+                  values.files
+                )
+                .then((res) => {
+                  console.log(res);
+                });
             }
           });
           console.log(values);
         }}
       >
-        {({ values }) => (
+        {({ values, setFieldValue }) => (
           <div className="container">
             <div className="row">
               <div className="col-md-10 mx-auto">
                 <Form className="addRentalForm">
                   <div className="form-group row">
                     <div className="col-sm-6">
-                      <Field name="name" placeholder="Name" />
+                      <Field name="name" placeholder="Rental Name" />
                     </div>
                     <div className="col-sm-6">
                       <Field name="description" placeholder="Description" />
@@ -199,11 +220,7 @@ export default function AddRental2() {
                   </div>
 
                   {/* Rooms */}
-                  <div className="row">
-                    <div className="col-sm">
-                      <h5 className="mt-3">Room Type</h5>
-                    </div>
-                  </div>
+
                   <div className="form-group row">
                     <div className="col-sm">
                       <FieldArray name="roomsDtoList">
@@ -219,6 +236,7 @@ export default function AddRental2() {
 
                               return (
                                 <div key={index}>
+                                  <h5 className="mt-3">Room Type</h5>
                                   <div className="form-group row">
                                     <div className="col-sm-6">
                                       <Field
@@ -260,13 +278,13 @@ export default function AddRental2() {
                                     })}
                                   </div>
                                   <div className="row ">
-                                    <h5 className="mt-10">
+                                    <h5 className="mt-5 mx-auto">
                                       Please choose type of bed
                                     </h5>
                                   </div>
                                   <div className="row">
                                     {bedType.map((bed, index) => (
-                                      <div className="row" key={index}>
+                                      <div className="row mx-auto" key={index}>
                                         <div className="col-sm">
                                           <FormikCheckbox
                                             name={bedIds}
@@ -279,12 +297,14 @@ export default function AddRental2() {
                                       </div>
                                     ))}
                                   </div>
-                                  <div className="row">
-                                    <h5>Please choose room type</h5>
+                                  <div className="row mt-5">
+                                    <h5 className="mx-auto mt-2">
+                                      Please choose room type
+                                    </h5>
                                   </div>
-                                  <div className="row">
+                                  <div className="row ">
                                     {roomTypes.map((room, index) => (
-                                      <div className="row" key={index}>
+                                      <div className="row mx-auto" key={index}>
                                         <div className="col-sm">
                                           <FormikCheckbox
                                             name={roomType}
@@ -322,7 +342,10 @@ export default function AddRental2() {
                       </FieldArray>
                     </div>
                   </div>
-
+                  <input
+                    type="file"
+                    onChange={(e) => onChangePicture(e)}
+                  ></input>
                   <button type="submit">Submit</button>
                   <pre>{JSON.stringify(values, null, 2)}</pre>
                 </Form>

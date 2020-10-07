@@ -1,82 +1,118 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Nav, Form, Button, FormControl } from "react-bootstrap";
 
-import logo from "../../img/logo.png";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import logo2 from "../../img/logo2.png";
 
 export default function NavbarLayout() {
-  const [title, setTitle] = useState("");
-  const [query, setQuery] = useState("");
-  const [userIsLogin, setIsLogin] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [details, setDetails] = useState("");
-
-  const USER_API = "http://localhost:8080/api/v1/auth/get-user/";
+  const [userIsLogin, setIsLogin] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [userType, setUserType] = useState("");
 
   useEffect(() => {
-    if (window.sessionStorage.getItem("login")) {
-      setUserEmail(window.sessionStorage.getItem("login"));
-      axios.get(USER_API + userEmail).then((res) => {
-        setDetails(res.data);
-        setIsLogin(true);
-        window.sessionStorage.setItem("userId", res.data.id);
-      });
-    } else {
-      setIsLogin(false);
+    if (window.sessionStorage.getItem("userEmail")) {
+      setIsLogin(true);
+      setFirstName(window.sessionStorage.getItem("firstName"));
+      setUserType(window.sessionStorage.getItem("userType"));
     }
-  }, [userEmail, userIsLogin]);
-
-  const handleClick = () => {
-    setQuery(title);
-  };
+  }, [userIsLogin]);
 
   return (
-    <>
-      <Navbar bg="light" expand="lg" className="fixed-top">
-        <Navbar.Brand href="/">
-          <img style={logoStyle} src={logo} alt="logo"></img>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            {userIsLogin ? (
-              <Nav.Link href="/logout"> Logout</Nav.Link>
-            ) : (
-              <Nav.Link href="/login"> Login</Nav.Link>
-            )}
+    <header className="main_menu home_menu">
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12">
+            <nav className="navbar navbar-expand-lg navbar-light">
+              <a className="navbar-brand" href="/">
+                {" "}
+                <img src={logo2} alt="logo" style={logoStyle} />{" "}
+              </a>
 
-            {userIsLogin ? (
-              <Nav.Link href="#"> Welcome {details.lastName} </Nav.Link>
-            ) : (
-              <Nav.Link href="/register"> Register </Nav.Link>
-            )}
+              <div
+                className="collapse navbar-collapse main-menu-item"
+                id="navbarNav"
+              >
+                <ul className="navbar-nav">
+                  <li className="nav-item active">
+                    <a className="nav-link" href="/">
+                      Home<span className="sr-only">(current)</span>
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/about">
+                      About
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/worldMap">
+                      Properties
+                    </a>
+                  </li>
+                  {userIsLogin ? (
+                    <li className="nav-item">
+                      <a className="nav-link" href="/logout">
+                        Logout
+                      </a>
+                    </li>
+                  ) : (
+                    <li className="nav-item">
+                      <a className="nav-link" href="/login">
+                        Login
+                      </a>
+                    </li>
+                  )}
+                  {userIsLogin ? (
+                    <li className="nav-item">
+                      <a
+                        href="/me"
+                        className="nav-link"
+                        style={{
+                          color: " #d46e1a",
+                          fontStyle: "italic",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Welcome {firstName}
+                      </a>
+                    </li>
+                  ) : (
+                    <li className="nav-item">
+                      <a
+                        href="/register"
+                        className="nav-link"
+                        style={{
+                          color: " #d46e1a",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Register
+                      </a>
+                    </li>
+                  )}
+                </ul>
+              </div>
 
-            {userIsLogin && details && details.type.name === "HOST" ? (
-              <Nav.Link href="/add-rental"> Add Rental</Nav.Link>
-            ) : userIsLogin && details && details.type.name === "GUEST" ? (
-              <Nav.Link href="/bookings"> See My Bookings</Nav.Link>
-            ) : null}
-          </Nav>
-          <Form inline>
-            <FormControl
-              onChange={(event) => setTitle(event.target.value)}
-              type="text"
-              placeholder="Search"
-              className="mr-sm-2"
-            />
-            <Link to={`/details/${title}`}>
-              <Button onClick={handleClick} variant="outline-success">
-                Search
-              </Button>
-            </Link>
-          </Form>
-        </Navbar.Collapse>
-      </Navbar>
-    </>
+              {userIsLogin && userType === "HOST" ? (
+                <div className="btn_1 d-none d-lg-block">
+                  <a className="float-right" href="/add-rental">
+                    {" "}
+                    Submit Property
+                  </a>
+                </div>
+              ) : userIsLogin && userType === "GUEST" ? (
+                <div className="btn_1 d-none d-lg-block">
+                  <a className="float-right" href="/bookings">
+                    {" "}
+                    My Bookings
+                  </a>
+                </div>
+              ) : null}
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 }
 const logoStyle = {
-  width: "45%",
-  height: "45%",
+  width: "90%",
+  height: "70%",
 };

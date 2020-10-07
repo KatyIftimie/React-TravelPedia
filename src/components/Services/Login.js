@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
@@ -11,9 +11,11 @@ export default function Login() {
   const [logInMsj, setLogInMsj] = useState("");
   const [isLoggedIn, setIsLogged] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [userDetails, setUserDetails] = useState([]);
   const history = useHistory();
 
   const LOGIN_API = "http://localhost:8080/api/v1/auth/login";
+  const USER_API = "http://localhost:8080/api/v1/auth/get-user/";
 
   const onSubmit = (user) => {
     axios
@@ -22,7 +24,18 @@ export default function Login() {
         if (res.status === 200) {
           setIsLogged(true);
           setLogInMsj("Success");
-          window.sessionStorage.setItem("login", user.email);
+          window.sessionStorage.setItem("userEmail", user.email);
+          if (window.sessionStorage.getItem("userEmail") !== undefined) {
+            const userEmail = window.sessionStorage.getItem("userEmail");
+            axios.get(USER_API + userEmail).then((res) => {
+              console.log(res);
+              setUserDetails(res.data);
+              window.sessionStorage.setItem("userId", res.data.id);
+              window.sessionStorage.setItem("firstName", res.data.firstName);
+              window.sessionStorage.setItem("userType", res.data.type.name);
+            });
+          }
+
           setTimeout(() => {
             history.push("/");
           }, 1500);
@@ -33,12 +46,14 @@ export default function Login() {
       });
   };
 
+  useEffect(() => {}, [isLoggedIn]);
+
   if (hasError) {
     return <NotFound />;
   }
 
   return (
-    <div className="container">
+    <div className="container loginForm ">
       <form
         className="form-signin"
         action="/j_spring_security_check"
@@ -65,8 +80,7 @@ export default function Login() {
         <span className={isLoggedIn ? "text-success" : "text-danger"}>
           {logInMsj}
         </span>
-        <label>Remember Me</label>
-        <input type="checkbox" name="remember-me" />
+
         <input type="submit" onClick={handleSubmit(onSubmit)} />
       </form>
     </div>

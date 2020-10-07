@@ -16,29 +16,33 @@ body > #root {
   font-family: "Space Mono", monospace;
 }
 
-#root {
-  display: grid;
-  gap: 0.5em;
-
-  grid-template-rows: 100px auto;
-}
-
-#root .fixed-top {
-  position: relative;
-}
-
-#sticky-footer {
-  flex-shrink: none;
-  width: 100%;
-  margin-top: auto;
-}
-
 .btn-outline-success {
   margin-top: 10px !important;
 }
 
 .addRentalForm {
   max-width: 100%;
+  margin-top: 12em;
+}
+
+.countryRentals {
+  margin: 12em 0 0 0;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.propertyView {
+  margin-top: 12em;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  height: 95px;
+  z-index: 99;
 }
 
 .rentalSelect:focus {
@@ -47,38 +51,6 @@ body > #root {
 }
 
 .rentalSelect {
-  -webkit-tap-highlight-color: transparent;
-  --blue: #007bff;
-  --indigo: #6610f2;
-  --purple: #6f42c1;
-  --pink: #e83e8c;
-  --red: #dc3545;
-  --orange: #fd7e14;
-  --yellow: #ffc107;
-  --green: #28a745;
-  --teal: #20c997;
-  --cyan: #17a2b8;
-  --white: #fff;
-  --gray: #868e96;
-  --gray-dark: #343a40;
-  --primary: #007bff;
-  --secondary: #868e96;
-  --success: #28a745;
-  --info: #17a2b8;
-  --warning: #ffc107;
-  --danger: #dc3545;
-  --light: #f8f9fa;
-  --dark: #343a40;
-  --breakpoint-xs: 0;
-  --breakpoint-sm: 576px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
-  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol";
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
   margin: 0;
   font-family: inherit;
   line-height: inherit;
@@ -94,9 +66,545 @@ body > #root {
   background-color: transparent !important;
 }
 
-.rentalTable {
-  border-radius: 5px;
-  width: 80% !important;
-  margin: 0px auto;
-  float: none;
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 16px;
+  width: auto;
+  height: 100%;
+}
+
+.banner_part {
+  height: 800px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* line 7, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part:after {
+  position: absolute;
+  right: 0;
+  top: 0;
+  content: "";
+  width: 50%;
+  height: 100%;
+  background-image: url(../img/homeImage2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 576px) {
+  /* line 7, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part:after {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* line 7, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part:after {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 7, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part:after {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  /* line 2, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part {
+    height: 700px;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* line 2, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part {
+    height: 700px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 2, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part {
+    height: 700px;
+  }
+}
+
+/* line 36, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .banner_text {
+  display: table;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 99;
+  margin-top: 60px;
+}
+
+@media (max-width: 576px) {
+  /* line 36, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part .banner_text {
+    text-align: center;
+    padding-top: 100px;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* line 36, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part .banner_text {
+    text-align: center;
+    padding-top: 100px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 36, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part .banner_text {
+    text-align: center;
+    padding-top: 100px;
+  }
+}
+
+/* line 55, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .banner_text .banner_text_iner {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/* line 59, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .banner_text h5 {
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  color: #666666;
+}
+
+/* line 66, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .banner_text h2 {
+  font-size: 50px;
+  line-height: 1.3;
+  margin: 10px 0px 20px;
+  font-weight: 600;
+}
+
+@media (max-width: 576px) {
+  /* line 66, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part .banner_text h2 {
+    font-size: 25px;
+    margin-bottom: 15px;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* line 66, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part .banner_text h2 {
+    font-size: 35px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 66, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part .banner_text h2 {
+    font-size: 35px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  /* line 66, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part .banner_text h2 {
+    font-size: 40px;
+    margin-bottom: 15px;
+    line-height: 1.4;
+  }
+}
+
+/* line 92, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .banner_text p {
+  font-size: 16px;
+  line-height: 1.929;
+  font-family: "Poppins", sans-serif;
+  color: #777777;
+}
+
+/* line 99, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .banner_text .banner_btn {
+  display: inline-block;
+  margin-top: 40px;
+  padding: 10px 30px;
+}
+
+@media (max-width: 576px) {
+  /* line 99, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part .banner_text .banner_btn {
+    margin-top: 20px;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* line 99, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part .banner_text .banner_btn {
+    margin-top: 20px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 99, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part .banner_text .banner_btn {
+    margin-top: 20px;
+  }
+}
+
+/* line 115, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .video_popup {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 95px;
+  height: 95px;
+  text-align: center;
+  padding-top: 102px;
+  padding-left: 34px;
+  z-index: 99 !important;
+  margin: 0 auto;
+}
+
+/* line 126, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .video_popup span {
+  width: 95px;
+  height: 95px;
+  background-color: #d46e1a;
+  display: inline-block;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 82px;
+  padding-left: 5px;
+  font-size: 20px;
+  color: #fff;
+  border: 7px solid #fff;
+  box-shadow: 0px 5px 25.5px 4.5px rgba(20, 48, 58, 0.2);
+}
+
+/* line 139, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .video_popup span:hover {
+  background-color: #d46e1a;
+}
+
+@media (max-width: 576px) {
+  /* line 115, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part .video_popup {
+    top: 100px;
+    padding-top: 70px;
+    padding-left: 0px;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* line 115, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part .video_popup {
+    top: 100px;
+    padding-top: 70px;
+    padding-left: 0px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 115, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+  .banner_part .video_popup {
+    top: 100px;
+    padding-top: 80px;
+    padding-left: 0px;
+  }
+}
+
+/* line 161, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .banner_social_icon {
+  position: absolute;
+  transform: rotate(-90deg);
+  z-index: 9999 !important;
+  left: -310px;
+  top: 49%;
+}
+
+/* line 167, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .banner_social_icon li {
+  color: #777777;
+  font-size: 25px;
+  font-family: "Roboto", sans-serif;
+}
+
+/* line 171, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .banner_social_icon li a {
+  color: #777777;
+  font-size: 22px;
+}
+
+/* line 174, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .banner_social_icon li span {
+  margin-right: 10px;
+}
+
+/* line 179, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .banner_social_icon i.fas.fa-circle {
+  font-size: 10px;
+  margin: 0px 10px 0px 20px;
+  color: #cfb579;
+}
+
+/* line 184, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .banner_social_icon a:hover {
+  color: #cfb579 !important;
+}
+
+/* line 188, E:/161 Real estate/161_Real_state_html/sass/_banner.scss */
+.banner_part .list-inline-item:not(:last-child) {
+  margin-right: 0px;
+}
+
+.btn_1 {
+  padding: 7px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #d46e1a;
+  color: #fff;
+  border: 2px solid #cfb579;
+  display: inline-block;
+  text-transform: capitalize;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.btn_1:hover {
+  background-color: #d46e1a;
+  border: 2px solid #d8b25a;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* line 38, E:/161 Real estate/161_Real_state_html/sass/_button.scss */
+.btn_1:hover a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* line 42, E:/161 Real estate/161_Real_state_html/sass/_button.scss */
+.btn_1 a {
+  color: #fff;
+}
+
+/* line 44, E:/161 Real estate/161_Real_state_html/sass/_button.scss */
+.btn_1 a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.home_menu {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 999;
+}
+
+.form-signin {
+  margin-top: 15em !important;
+}
+
+.main-menu-item {
+  float: right;
+}
+
+.main_menu .navbar {
+  padding: 0px;
+}
+
+/* line 7, E:/161 Real estate/161_Real_state_html/sass/_menu.scss */
+.main_menu .navbar .navbar-toggler {
+  border: 0px solid transparent;
+}
+
+/* line 10, E:/161 Real estate/161_Real_state_html/sass/_menu.scss */
+.main_menu .navbar .main-menu-item {
+  text-align: center !important;
+  justify-content: center;
+}
+
+@media (max-width: 576px) {
+  /* line 13, E:/161 Real estate/161_Real_state_html/sass/_menu.scss */
+  .main_menu .navbar .main-menu-item .navbar-nav {
+    margin-left: 0%;
+    background-color: #bd9f5a;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* line 13, E:/161 Real estate/161_Real_state_html/sass/_menu.scss */
+  .main_menu .navbar .main-menu-item .navbar-nav {
+    margin-left: 0%;
+    background-color: #bd9f5a;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 13, E:/161 Real estate/161_Real_state_html/sass/_menu.scss */
+  .main_menu .navbar .main-menu-item .navbar-nav {
+    margin-left: 0%;
+    background-color: #bd9f5a;
+  }
+}
+
+/* line 26, E:/161 Real estate/161_Real_state_html/sass/_menu.scss */
+.main_menu .navbar .main-menu-item .navbar-nav a {
+  padding: 0px 22px;
+  font-size: 25px;
+  color: #14303a;
+  text-transform: capitalize;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+/* line 31, E:/161 Real estate/161_Real_state_html/sass/_menu.scss */
+.main_menu .navbar .main-menu-item .navbar-nav a:hover {
+  color: #d46e1a;
+}
+
+@media (max-width: 576px) {
+  /* line 26, E:/161 Real estate/161_Real_state_html/sass/_menu.scss */
+  .main_menu .navbar .main-menu-item .navbar-nav a {
+    padding: 10px 22px;
+    color: #fff;
+    background-color: #bd9c50;
+    margin-bottom: 2px;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* line 26, E:/161 Real estate/161_Real_state_html/sass/_menu.scss */
+  .main_menu .navbar .main-menu-item .navbar-nav a {
+    padding: 15px 22px;
+    color: #fff;
+    background-color: #bd9c50;
+    margin-bottom: 2px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 26, E:/161 Real estate/161_Real_state_html/sass/_menu.scss */
+  .main_menu .navbar .main-menu-item .navbar-nav a {
+    padding: 15px 22px;
+    color: #fff;
+    background-color: #bd9c50;
+    margin-bottom: 2px;
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  /* line 26, E:/161 Real estate/161_Real_state_html/sass/_menu.scss */
+  .main_menu .navbar .main-menu-item .navbar-nav a {
+    padding: 0px 20px;
+  }
+}
+
+.aboutus-area {
+  padding-top: 120px;
+  padding-bottom: 120px;
+  margin-top: 10em;
+}
+/*-- aboutus Image --*/
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .aboutus-image {
+    margin-bottom: 30px;
+    float: none;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .aboutus-image {
+    margin-bottom: 30px;
+    margin-right: 0;
+    float: none;
+    width: auto;
+  }
+}
+.aboutus-image img {
+  width: 100%;
+}
+
+/*-- aboutus Content --*/
+.aboutus-content h1 {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 40px;
+  margin-bottom: 2px;
+}
+@media only screen and (max-width: 479px) {
+  .aboutus-content h1 {
+    font-size: 30px;
+    line-height: 30px;
+  }
+}
+.aboutus-content h1 span {
+  color: #e98f1b;
+}
+
+.aboutus-content h4 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #9b9b9b;
+  margin-bottom: 23px;
+}
+
+.aboutus-content p {
+  font-size: 16px;
+  line-height: 27px;
+}
+
+/*-- counter --*/
+.counter {
+  border: 1px solid #eeeeee;
+  margin-top: 32px;
+  float: left;
+  width: 100%;
+}
+.counter .single-counter {
+  float: left;
+  width: 25%;
+  padding: 28px 15px 28px;
+}
+@media only screen and (max-width: 767px) {
+  .counter .single-counter {
+    width: 50%;
+  }
+  .counter .single-counter:nth-child(3) {
+    border-top: 1px solid #eeeeee;
+    border-left: 0px solid #eeeeee;
+  }
+  .counter .single-counter:nth-child(4) {
+    border-top: 1px solid #eeeeee;
+  }
+}
+.counter .single-counter + .single-counter {
+  border-left: 1px solid #eeeeee;
+}
+.counter .single-counter h2 {
+  font-size: 30px;
+  color: #e98f1b;
+  line-height: 24px;
+  font-family: "Open Sans", sans-serif;
+  margin-bottom: 8px;
+}
+.counter .single-counter p {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0;
+  color: #8f8f8f;
 }
