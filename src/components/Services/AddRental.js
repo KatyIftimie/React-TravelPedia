@@ -12,11 +12,13 @@ export default function AddRental2() {
   const [roomTypes, setRoomType] = useState([]);
   const [bedType, setBedType] = useState([]);
   const [rentalType, setRentalType] = useState([]);
+  const [files, setFiles] = useState([]);
+
+  let fd = new FormData();
 
   const headers = {
     "Access-Control-Allow-Origin": "*",
     "X-Requested-With": "XMLHttpRequest",
-    "Content-Type": "multipart/form-data",
   };
 
   useEffect(() => {
@@ -27,7 +29,7 @@ export default function AddRental2() {
       if (response.ok) {
         setAmnities(data);
       } else {
-        console.log("nu");
+        console.log("nu amenities");
       }
     }
 
@@ -78,7 +80,7 @@ export default function AddRental2() {
         initialValues={{
           name: "",
           files: {
-            file1: "",
+            file1: {},
             file2: "",
             file3: "",
             file4: "",
@@ -117,7 +119,7 @@ export default function AddRental2() {
               axios
                 .post(
                   `http://localhost:8080/api/v1/rentals/${res.data.new_rental_id}/images`,
-                  values.files,
+                  fd,
                   { headers: headers }
                 )
                 .then((res) => {
@@ -349,8 +351,9 @@ export default function AddRental2() {
                     type="file"
                     name="files.file1"
                     onChange={(e) => {
-                      console.log(e.target.files[0].name);
-                      setFieldValue("files.file1", e.target.files[0].name);
+                      console.log(e.target.files[0]);
+                      setFieldValue("files.file1", e.target.files[0]);
+                      fd.append("file1", e.target.files[0]);
                     }}
                   />
                   <input
@@ -358,7 +361,7 @@ export default function AddRental2() {
                     name="files.file2"
                     onChange={(e) => {
                       console.log(e.target.files[0].name);
-                      setFieldValue("files.file2", e.target.files[0].name);
+                      setFieldValue("files.file2", e.target.files[0]);
                     }}
                   />
                   <input
@@ -366,7 +369,7 @@ export default function AddRental2() {
                     name="files.file3"
                     onChange={(e) => {
                       console.log(e.target.files[0].name);
-                      setFieldValue("files.file3", e.target.files[0].name);
+                      setFieldValue("files.file3", e.target.files[0]);
                     }}
                   />
                   <input
@@ -374,7 +377,7 @@ export default function AddRental2() {
                     name="files.file4"
                     onChange={(e) => {
                       console.log(e.target.files[0].name);
-                      setFieldValue("files.file4", e.target.files[0].name);
+                      setFieldValue("files.file4", e.target.files[0]);
                     }}
                   />
                   <input
@@ -382,7 +385,7 @@ export default function AddRental2() {
                     name="files.file5"
                     onChange={(e) => {
                       console.log(e.target.files[0].name);
-                      setFieldValue("files.file5", e.target.files[0].name);
+                      setFieldValue("files.file5", e.target.files[0]);
                     }}
                   />
 
