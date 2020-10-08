@@ -1,6 +1,4 @@
 import React from "react";
-import Image from "../../img/No-image-found.jpg";
-import Prop1 from "../../img/property-1.jpg";
 
 import "../../style/RentalsCard.css";
 
@@ -9,24 +7,22 @@ import "../../style/CountryRentals.css";
 export default function RentalsTable(props) {
   const rentalUrl = `/rental-details/${props.rental.id}`;
   const roomsNo = props.rental.rooms.length;
+  const image = `http://localhost:8080/api/v1/images/rentals/rental-${props.rental.id}-0`;
 
   return (
-    <div
-      className="card-box-a card-shadow mr-3 mt-5 mx-auto"
-      // style={{ width: "30%", height: "100%" }}
-    >
+    <div className="card-box-a card-shadow mr-3 mt-5 mx-auto">
       <div className="img-box-a">
-        <img src={Prop1} alt="" className="img-a img-fluid" />
+        <img src={image} alt="" className="img-a " />
       </div>
       <div className="card-overlay">
         <div className="card-overlay-a-content">
           <div className="card-header-a">
             <h2 className="card-title-a">
-              <a href="#">
+              <p className="rentalName" href="#">
                 {props.rental.name}
                 <br />
                 {props.rental.address.city}
-              </a>
+              </p>
             </h2>
           </div>
           <div className="card-body-a">
@@ -55,7 +51,6 @@ export default function RentalsTable(props) {
             </ul>
           </div>
         </div>
-        
       </div>
     </div>
   );

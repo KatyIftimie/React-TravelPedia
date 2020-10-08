@@ -11,7 +11,7 @@ export default function Login() {
   const [logInMsj, setLogInMsj] = useState("");
   const [isLoggedIn, setIsLogged] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [userDetails, setUserDetails] = useState([]);
+
   const history = useHistory();
 
   const LOGIN_API = "http://localhost:8080/api/v1/auth/login";
@@ -21,6 +21,7 @@ export default function Login() {
     axios
       .post(LOGIN_API, user)
       .then((res) => {
+        console.log(res);
         if (res.status === 200) {
           setIsLogged(true);
           setLogInMsj("Success");
@@ -29,7 +30,7 @@ export default function Login() {
             const userEmail = window.sessionStorage.getItem("userEmail");
             axios.get(USER_API + userEmail).then((res) => {
               console.log(res);
-              setUserDetails(res.data);
+
               window.sessionStorage.setItem("userId", res.data.id);
               window.sessionStorage.setItem("firstName", res.data.firstName);
               window.sessionStorage.setItem("userType", res.data.type.name);
@@ -42,7 +43,13 @@ export default function Login() {
         }
       })
       .catch((err) => {
-        setHasError(true);
+        if (err) {
+          setHasError(true);
+        } else {
+          if (err.response.data === "Invalid credentials") {
+            setLogInMsj(err.response.data);
+          }
+        }
       });
   };
 

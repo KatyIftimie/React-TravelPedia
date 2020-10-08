@@ -12,13 +12,12 @@ export default function AddRental2() {
   const [roomTypes, setRoomType] = useState([]);
   const [bedType, setBedType] = useState([]);
   const [rentalType, setRentalType] = useState([]);
-  const [files, setFiles] = useState([]);
+  const [rentalMsj, setRentalMsj] = useState("");
 
   let fd = new FormData();
 
   const headers = {
     "Access-Control-Allow-Origin": "*",
-    "X-Requested-With": "XMLHttpRequest",
   };
 
   useEffect(() => {
@@ -79,13 +78,6 @@ export default function AddRental2() {
       <Formik
         initialValues={{
           name: "",
-          files: {
-            file1: {},
-            file2: "",
-            file3: "",
-            file4: "",
-            file5: "",
-          },
           description: "",
           checkInTime: "",
           checkOutTime: "",
@@ -115,7 +107,6 @@ export default function AddRental2() {
           // same shape as initial values
           axios.post(RENTAL_API_URL, values).then((res) => {
             if (res.status === 200) {
-              console.log(res);
               axios
                 .post(
                   `http://localhost:8080/api/v1/rentals/${res.data.new_rental_id}/images`,
@@ -124,14 +115,16 @@ export default function AddRental2() {
                 )
                 .then((res) => {
                   console.log(res);
+                  if (res.status === 200) {
+                    setRentalMsj("You rental was added Succesfuly");
+                  }
                 });
             }
           });
-          console.log(values);
         }}
       >
-        {({ values, setFieldValue }) => (
-          <div className="container">
+        {({ values }) => (
+          <div className="container addRental">
             <div className="row">
               <div className="col-md-10 mx-auto">
                 <Form className="addRentalForm" encType="multipart/form-data">
@@ -351,8 +344,6 @@ export default function AddRental2() {
                     type="file"
                     name="files.file1"
                     onChange={(e) => {
-                      console.log(e.target.files[0]);
-                      setFieldValue("files.file1", e.target.files[0]);
                       fd.append("file1", e.target.files[0]);
                     }}
                   />
@@ -360,38 +351,36 @@ export default function AddRental2() {
                     type="file"
                     name="files.file2"
                     onChange={(e) => {
-                      console.log(e.target.files[0].name);
-                      setFieldValue("files.file2", e.target.files[0]);
+                      fd.append("file2", e.target.files[0]);
                     }}
                   />
                   <input
                     type="file"
                     name="files.file3"
                     onChange={(e) => {
-                      console.log(e.target.files[0].name);
-                      setFieldValue("files.file3", e.target.files[0]);
+                      fd.append("file3", e.target.files[0]);
                     }}
                   />
                   <input
                     type="file"
                     name="files.file4"
                     onChange={(e) => {
-                      console.log(e.target.files[0].name);
-                      setFieldValue("files.file4", e.target.files[0]);
+                      fd.append("file4", e.target.files[0]);
                     }}
                   />
                   <input
                     type="file"
                     name="files.file5"
                     onChange={(e) => {
-                      console.log(e.target.files[0].name);
-                      setFieldValue("files.file5", e.target.files[0]);
+                      fd.append("file5", e.target.files[0]);
                     }}
                   />
 
                   <button type="submit">Submit</button>
-                  <pre>{JSON.stringify(values, null, 2)}</pre>
+
+                  {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
                 </Form>
+                <p>{rentalMsj}</p>
               </div>
             </div>
           </div>

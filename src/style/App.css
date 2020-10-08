@@ -25,11 +25,19 @@ body > #root {
   margin-top: 12em;
 }
 
+.serverNotResp {
+  margin-top: 6em;
+}
+
+.addRental {
+  padding-bottom: 100px;
+}
+
 .countryRentals {
   margin: 12em 0 0 0;
   width: 100% !important;
   max-width: 100% !important;
-  padding-bottom: 95px;
+  padding-bottom: 195px;
 }
 
 .propertyView {
