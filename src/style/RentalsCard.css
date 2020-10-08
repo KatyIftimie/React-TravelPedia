@@ -72,58 +72,42 @@
 }
 
 @media (max-width: 767px) {
-  .card-box-a,
-  .card-box-b,
-  .card-box-c,
-  .card-box-d {
+  .card-box-a {
     margin-bottom: 2.5rem;
   }
 }
 
 @media (min-width: 768px) {
-  .grid .card-box-a,
-  .grid .card-box-b,
-  .grid .card-box-c,
-  .grid .card-box-d {
+  .grid .card-box-a {
     margin-bottom: 2.5rem;
   }
 }
 
-.card-box-a,
-.card-box-b,
-.card-box-d {
+.card-box-a {
   position: relative;
   overflow: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
-.card-box-a .img-a,
-.card-box-a .img-b,
-.card-box-b .img-a,
-.card-box-b .img-b {
+.card-box-a .img-a {
   transition: 0.8s all ease-in-out;
 }
 
 @media (min-width: 768px) {
-  .card-box-a:hover .img-a,
-  .card-box-a:hover .img-b,
-  .card-box-b:hover .img-a,
-  .card-box-b:hover .img-b {
+  .card-box-a:hover .img-a {
     transform: scale(1.2);
   }
 }
 
 @media (min-width: 768px) {
-  .card-box-a .price-a,
-  .card-box-b .price-a {
+  .card-box-a .price-a {
     font-size: 0.9rem;
   }
 }
 
 @media (min-width: 992px) {
-  .card-box-a .price-a,
-  .card-box-b .price-a {
+  .card-box-a .price-a {
     font-size: 1rem;
   }
 }

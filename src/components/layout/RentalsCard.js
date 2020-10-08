@@ -55,6 +55,7 @@ export default function RentalsTable(props) {
             </ul>
           </div>
         </div>
+        
       </div>
     </div>
   );

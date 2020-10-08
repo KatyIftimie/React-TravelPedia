@@ -12,17 +12,11 @@ export default function AddRental2() {
   const [roomTypes, setRoomType] = useState([]);
   const [bedType, setBedType] = useState([]);
   const [rentalType, setRentalType] = useState([]);
-  const [pictures, setPictures] = useState({
-    file1: "",
-    file2: "",
-    file3: "",
-    file4: "",
-    file5: "",
-  });
 
-  const onChangePicture = (e) => {
-    console.log("picture: ", pictures);
-    setPictures([...pictures, e.target.files[0]]);
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "X-Requested-With": "XMLHttpRequest",
+    "Content-Type": "multipart/form-data",
   };
 
   useEffect(() => {
@@ -83,7 +77,13 @@ export default function AddRental2() {
       <Formik
         initialValues={{
           name: "",
-          files: null,
+          files: {
+            file1: "",
+            file2: "",
+            file3: "",
+            file4: "",
+            file5: "",
+          },
           description: "",
           checkInTime: "",
           checkOutTime: "",
@@ -117,7 +117,8 @@ export default function AddRental2() {
               axios
                 .post(
                   `http://localhost:8080/api/v1/rentals/${res.data.new_rental_id}/images`,
-                  values.files
+                  values.files,
+                  { headers: headers }
                 )
                 .then((res) => {
                   console.log(res);
@@ -131,7 +132,7 @@ export default function AddRental2() {
           <div className="container">
             <div className="row">
               <div className="col-md-10 mx-auto">
-                <Form className="addRentalForm">
+                <Form className="addRentalForm" encType="multipart/form-data">
                   <div className="form-group row">
                     <div className="col-sm-6">
                       <Field name="name" placeholder="Rental Name" />
@@ -196,7 +197,9 @@ export default function AddRental2() {
                       className="rentalSelect"
                     >
                       {rentalType.map((rental, index) => (
-                        <option value={rental.id}>{rental.name}</option>
+                        <option value={rental.id} key={index}>
+                          {rental.name}{" "}
+                        </option>
                       ))}
                     </Field>
                   </div>
@@ -344,8 +347,45 @@ export default function AddRental2() {
                   </div>
                   <input
                     type="file"
-                    onChange={(e) => onChangePicture(e)}
-                  ></input>
+                    name="files.file1"
+                    onChange={(e) => {
+                      console.log(e.target.files[0].name);
+                      setFieldValue("files.file1", e.target.files[0].name);
+                    }}
+                  />
+                  <input
+                    type="file"
+                    name="files.file2"
+                    onChange={(e) => {
+                      console.log(e.target.files[0].name);
+                      setFieldValue("files.file2", e.target.files[0].name);
+                    }}
+                  />
+                  <input
+                    type="file"
+                    name="files.file3"
+                    onChange={(e) => {
+                      console.log(e.target.files[0].name);
+                      setFieldValue("files.file3", e.target.files[0].name);
+                    }}
+                  />
+                  <input
+                    type="file"
+                    name="files.file4"
+                    onChange={(e) => {
+                      console.log(e.target.files[0].name);
+                      setFieldValue("files.file4", e.target.files[0].name);
+                    }}
+                  />
+                  <input
+                    type="file"
+                    name="files.file5"
+                    onChange={(e) => {
+                      console.log(e.target.files[0].name);
+                      setFieldValue("files.file5", e.target.files[0].name);
+                    }}
+                  />
+
                   <button type="submit">Submit</button>
                   <pre>{JSON.stringify(values, null, 2)}</pre>
                 </Form>
