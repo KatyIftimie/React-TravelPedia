@@ -88,6 +88,8 @@
   overflow: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  width: 300px;
+  height: 500px;
 }
 
 .card-box-a .img-a {
@@ -98,6 +100,11 @@
   .card-box-a:hover .img-a {
     transform: scale(1.2);
   }
+}
+
+.img-a {
+  width: 400px;
+  height: 500px;
 }
 
 @media (min-width: 768px) {

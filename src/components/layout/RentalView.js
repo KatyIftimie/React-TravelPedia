@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import StarRatingComponent from "react-star-rating-component";
-import NoImage from "../../img/No-image-found.jpg";
+
 import "../../style/CountryRentals.css";
 
 export default function RentalView(props) {
   const [details, setDetails] = useState([]);
   const rentalId = props.location.pathname.split("/")[2];
+  const image = `http://localhost:8080/api/v1/images/rentals/rental-${details.id}-0`;
 
   useEffect(() => {
     async function fetchData() {
@@ -65,8 +66,8 @@ export default function RentalView(props) {
 
       <img
         className="img-fluid "
-        style={{ width: "500px" }}
-        src={NoImage}
+        style={{ width: "300px" }}
+        src={image}
         alt="imag"
       />
       <h5>{details.description}</h5>
@@ -75,49 +76,49 @@ export default function RentalView(props) {
 
       <ul style={{ listStyleType: "square" }}>
         {details.amenities
-          ? details.amenities.map((amenity) => <li>{amenity.name}</li>)
+          ? details.amenities.map((amenity, index) => (
+              <li key={index}>{amenity.name}</li>
+            ))
           : null}
       </ul>
 
       <hr></hr>
       <h5>Rooms: </h5>
-      <div class="container">
+      <div className="container">
         {details.rooms
-          ? details.rooms.map((room) => (
+          ? details.rooms.map((room, index) => (
               <div
-                class="card"
+                className="card"
                 style={{
                   width: "400px",
                   display: "inline-block",
                   margin: "30px",
                 }}
+                key={index}
               >
-                <img
-                  class="card-img-top"
-                  src={NoImage}
-                  alt="Card imag"
-                  style={{ width: "100%" }}
-                />
-                <div class="card-body">
-                  <h4 class="card-title">{room.name}</h4>
+                <div className="card-body">
+                  <h4 className="card-title">{room.name}</h4>
                   <small>
                     Type: {room.type.name}, Price: {room.price}
                   </small>
-                  <p class="card-text">{room.description}</p>
+                  <p className="card-text">{room.description}</p>
                   <div>
                     Beds:{" "}
-                    {room.beds.map((bed) => (
-                      <small>{bed.type}</small>
+                    {room.beds.map((bed, index) => (
+                      <small key={index}>{bed.type}</small>
                     ))}
                   </div>
                   <div>
                     Amenities:{" "}
-                    {room.amenities.map((amenity) => (
-                      <small>-{amenity.name}- </small>
+                    {room.amenities.map((amenity, index) => (
+                      <small key={index}>-{amenity.name}- </small>
                     ))}
                   </div>
 
-                  <a href="/" class="btn btn-primary">
+                  <a
+                    href={`/rentals/${details.id}/add-reservation`}
+                    className="btn btn-primary"
+                  >
                     Reserve now
                   </a>
                 </div>

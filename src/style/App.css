@@ -33,15 +33,21 @@ body > #root {
   padding-bottom: 100px;
 }
 
+.addReservation {
+  padding-top: 12em;
+  padding-bottom: 120px;
+}
+
 .countryRentals {
   margin: 12em 0 0 0;
-  width: 100% !important;
+
   max-width: 100% !important;
   padding-bottom: 195px;
 }
 
 .propertyView {
   margin-top: 12em;
+  padding-bottom: 220px;
 }
 
 footer {
@@ -73,14 +79,6 @@ footer {
   margin-bottom: 10px;
   font-size: 14px;
   background-color: transparent !important;
-}
-
-.wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 16px;
-  width: auto;
-  height: 100%;
 }
 
 .banner_part {
