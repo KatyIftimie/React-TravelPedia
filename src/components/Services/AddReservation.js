@@ -26,30 +26,18 @@ export default function AddReservation() {
     fetchRooms();
   }, [API_URL]);
 
-  const calculateTotal = (value, room) => {
-    setTimeout(() => {
-      console.log(totalPrice);
-      console.log(value);
-      console.log(typeof value[0]);
-      console.log(typeof room);
-      if (value.includes(room)) {
-        setTotalPrice(totalPrice + room.price);
-        console.log(totalPrice);
-      }
-    }, 500);
-  };
-
   return (
     <div>
       <Formik
         initialValues={{
+          checked: false,
           prices: [],
-          checkinDate: "",
-          checkoutDate: "",
+          checkInDate: "",
+          checkOutDate: "",
           totalAmount: "",
           messageToHost: "",
           rentalID: rental_Id,
-          reservationStatusID: "",
+          reservationStatusID: "1",
           reservedRoomsIDs: [],
           guestUserID: window.sessionStorage.getItem("userId"),
         }}
@@ -57,7 +45,7 @@ export default function AddReservation() {
           console.log(values);
           // same shape as initial values
           axios
-            .post("localhost:8080/api/v1/reservations", values)
+            .post("http://localhost:8080/api/v1/reservations", values)
             .then((res) => {
               if (res.status === 200) {
                 console.log("succes");
@@ -66,7 +54,7 @@ export default function AddReservation() {
             });
         }}
       >
-        {({ values }) => (
+        {({ values, setFieldValue }) => (
           <div className="container addReservation">
             <h5 className="text-center">Make a reservation</h5>
             <div className="row">
@@ -122,7 +110,10 @@ export default function AddReservation() {
                                       name="reservedRoomsIDs"
                                       value={`${room.id}`}
                                       onClick={() => {
-                                        setTotalPrice(totalPrice + room.price);
+                                        setFieldValue("prices", [
+                                          ...values.prices,
+                                          room.price,
+                                        ]);
                                       }}
                                     />
                                     I Want This Room
