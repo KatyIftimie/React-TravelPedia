@@ -381,9 +381,11 @@ footer {
   padding: 7px 12px;
   font-size: 14px;
   font-weight: 500;
+  font-family: "Courier New", Courier, monospace;
   background-color: #d46e1a;
   color: #fff;
   border: 2px solid #cfb579;
+  border-radius: 14px;
   display: inline-block;
   text-transform: capitalize;
   -webkit-transition: 0.5s;

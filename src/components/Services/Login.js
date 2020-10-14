@@ -88,7 +88,11 @@ export default function Login() {
           {logInMsj}
         </span>
 
-        <input type="submit" onClick={handleSubmit(onSubmit)} />
+        <input
+          type="submit"
+          className="btn_1"
+          onClick={handleSubmit(onSubmit)}
+        />
       </form>
     </div>
   );

@@ -13,6 +13,7 @@ import Login from "./components/Services/Login";
 import Logout from "./components/Services/Logout";
 import AddRental from "./components/Services/AddRental.js";
 import RentalView from "./components/layout/RentalView";
+import MyBookings from "./components/layout/MyBookings";
 import AddReservation from "./components/Services/AddReservation";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           path="/rentals/:rental_id/add-reservation"
           component={AddReservation}
         ></Route>
+        <Route path="/bookings" component={MyBookings}></Route>
       </Switch>
       <Footer />
     </div>

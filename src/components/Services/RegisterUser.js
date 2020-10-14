@@ -132,7 +132,11 @@ export default function RegisterUser() {
         <span className={isSubmitted ? "text-success" : "text-danger"}>
           {registrationMessage}
         </span>
-        <input type="submit" onClick={handleSubmit(onSubmit)} />
+        <input
+          type="submit"
+          className="btn_1"
+          onClick={handleSubmit(onSubmit)}
+        />
       </form>
     </div>
   );

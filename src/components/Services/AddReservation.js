@@ -12,6 +12,15 @@ export default function AddReservation() {
 
   const [totalPrice, setTotalPrice] = useState(0);
 
+  const calculatePrice = (priceList) => {
+    let total = 0;
+    for (let i = 0; i < priceList.length; i++) {
+      total += Number(priceList[i]);
+    }
+    setTotalPrice(total);
+    return total;
+  };
+
   useEffect(() => {
     async function fetchRooms() {
       let response = await fetch(API_URL);
@@ -24,13 +33,12 @@ export default function AddReservation() {
       }
     }
     fetchRooms();
-  }, [API_URL]);
+  }, [API_URL, totalPrice]);
 
   return (
     <div>
       <Formik
         initialValues={{
-          checked: false,
           prices: [],
           checkInDate: "",
           checkOutDate: "",
@@ -43,7 +51,8 @@ export default function AddReservation() {
         }}
         onSubmit={(values) => {
           console.log(values);
-          // same shape as initial values
+          calculatePrice(values.prices);
+          console.log(totalPrice);
           axios
             .post("http://localhost:8080/api/v1/reservations", values)
             .then((res) => {
@@ -63,11 +72,11 @@ export default function AddReservation() {
                   <div className="form-group row">
                     <div className="col-sm-6">
                       Check In
-                      <Field name="checkinDate" type="datetime-local" />
+                      <Field name="checkInDate" type="datetime-local" />
                     </div>
                     <div className="col-sm-6">
                       Check Out
-                      <Field name="checkoutDate" type="datetime-local" />
+                      <Field name="checkOutDate" type="datetime-local" />
                     </div>
                   </div>
                   <div className="form-group row">
@@ -110,10 +119,10 @@ export default function AddReservation() {
                                       name="reservedRoomsIDs"
                                       value={`${room.id}`}
                                       onClick={() => {
-                                        setFieldValue("prices", [
-                                          ...values.prices,
-                                          room.price,
-                                        ]);
+                                        setFieldValue(
+                                          "totalAmount",
+                                          room.price
+                                        );
                                       }}
                                     />
                                     I Want This Room
