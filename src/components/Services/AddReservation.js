@@ -121,7 +121,7 @@ export default function AddReservation() {
                                       onClick={() => {
                                         setFieldValue(
                                           "totalAmount",
-                                          room.price
+                                          room.price + values.totalAmount
                                         );
                                       }}
                                     />

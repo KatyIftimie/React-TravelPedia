@@ -16,6 +16,10 @@ body > #root {
   font-family: "Space Mono", monospace;
 }
 
+.text-color {
+  color: #d46e1a;
+}
+
 .btn-outline-success {
   margin-top: 10px !important;
 }
@@ -79,6 +83,8 @@ footer {
   margin-bottom: 10px;
   font-size: 14px;
   background-color: transparent !important;
+  padding: 5px 10px 5px 10px;
+  width: 99%;
 }
 
 .banner_part {
@@ -381,7 +387,7 @@ footer {
   padding: 7px 12px;
   font-size: 14px;
   font-weight: 500;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "BioRhyme";
   background-color: #d46e1a;
   color: #fff;
   border: 2px solid #cfb579;
@@ -427,6 +433,7 @@ footer {
 
 .form-signin {
   margin-top: 15em !important;
+  background-image: url(../img/splash.png);
 }
 
 .main-menu-item {

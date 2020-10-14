@@ -124,24 +124,24 @@ export default function AddRental2() {
         }}
       >
         {({ values }) => (
-          <div className="container addRental">
-            <div className="row">
+          <div className="container addRental ">
+            <div className="row ">
               <div className="col-md-10 mx-auto">
                 <Form className="addRentalForm" encType="multipart/form-data">
                   <div className="form-group row">
                     <div className="col-sm-6">
                       <Field name="name" placeholder="Rental Name" />
                     </div>
-                    <div className="col-sm-6">
+                    <div className="col-sm-6 text-warning">
                       <Field name="description" placeholder="Description" />
                     </div>
                   </div>
                   <div className="form-group row">
-                    <div className="col-sm-6">
-                      Check In
+                    <div className="col-sm-6 text-color">
+                      Check In <i className="far fa-check-circle"></i>
                       <Field name="checkInTime" type="datetime-local" />
                     </div>
-                    <div className="col-sm-6">
+                    <div className="col-sm-6 text-color">
                       Check Out
                       <Field
                         name="checkOutTime"
@@ -153,14 +153,14 @@ export default function AddRental2() {
 
                   {/* address */}
                   <div className="form-group row">
-                    <div className="col-sm-6">
-                      Address
+                    <div className="col-sm-6 text-color">
+                      Address <i class="far fa-address-card"></i>
                       <Field
                         name="addressDto.addressLine1"
                         placeholder="Address Line 1"
                       />
                     </div>
-                    <div className="col-sm-6">
+                    <div className="col-sm-6 text-color">
                       Address (Line 2)
                       <Field
                         name="addressDto.addressLine2"
@@ -183,23 +183,28 @@ export default function AddRental2() {
                     </div>
                   </div>
                   <div className="row col-sm">
-                    <h5>Rental Type</h5>
+                    <h6 className="text-color">Rental Type</h6>{" "}
+                    <i className="fas fa-house-user mt-1 ml-3"></i>
                   </div>
                   <div className="row">
                     <Field
                       as="select"
                       name="rentalTypeID"
-                      className="rentalSelect"
+                      className="rentalSelect "
                     >
                       {rentalType.map((rental, index) => (
-                        <option value={rental.id} key={index}>
+                        <option
+                          className="selectOptions"
+                          value={rental.id}
+                          key={index}
+                        >
                           {rental.name}{" "}
                         </option>
                       ))}
                     </Field>
                   </div>
                   <div className="row">
-                    <h5 className="mt-3 col-sm">Amenities</h5>
+                    <h5 className="mt-3 col-sm text-color">Amenities</h5>
                   </div>
                   <div className="row">
                     {amnities.map((amenity, index) => {
@@ -234,7 +239,7 @@ export default function AddRental2() {
 
                               return (
                                 <div key={index}>
-                                  <h5 className="mt-3">Room Type</h5>
+                                  <h5 className="mt-3 text-color">Room Type</h5>
                                   <div className="form-group row">
                                     <div className="col-sm-6">
                                       <Field
@@ -276,7 +281,7 @@ export default function AddRental2() {
                                     })}
                                   </div>
                                   <div className="row ">
-                                    <h5 className="mt-5 mx-auto">
+                                    <h5 className="mt-5 mx-auto text-color">
                                       Please choose type of bed
                                     </h5>
                                   </div>
@@ -296,7 +301,7 @@ export default function AddRental2() {
                                     ))}
                                   </div>
                                   <div className="row mt-5">
-                                    <h5 className="mx-auto mt-2">
+                                    <h5 className="mx-auto mt-2 text-color">
                                       Please choose room type
                                     </h5>
                                   </div>
@@ -320,7 +325,7 @@ export default function AddRental2() {
                             })}
 
                             <button
-                              className="button"
+                              className="btn_1"
                               type="button"
                               onClick={() =>
                                 push({
@@ -376,9 +381,7 @@ export default function AddRental2() {
                     }}
                   />
 
-                  <button type="submit">Submit</button>
-
-                  {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+                  <input className="btn_1" type="submit"></input>
                 </Form>
                 <p>{rentalMsj}</p>
               </div>

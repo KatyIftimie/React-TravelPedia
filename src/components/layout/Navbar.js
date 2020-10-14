@@ -13,7 +13,7 @@ export default function NavbarLayout() {
       setFirstName(window.sessionStorage.getItem("firstName"));
       setUserType(window.sessionStorage.getItem("userType"));
     }
-  }, [userIsLogin]);
+  }, []);
 
   return (
     <header className="main_menu home_menu">

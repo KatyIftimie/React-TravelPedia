@@ -36,7 +36,7 @@ export default function RegisterUser() {
 
   return (
     <div className="container">
-      <form className="form-signin" onSubmit={(e) => e.preventDefault}>
+      <form className="form-signin " onSubmit={(e) => e.preventDefault}>
         <label className="d-inline">Email: </label>
         <input
           type="text"

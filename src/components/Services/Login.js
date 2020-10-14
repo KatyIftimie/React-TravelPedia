@@ -43,7 +43,8 @@ export default function Login() {
         }
       })
       .catch((err) => {
-        if (err) {
+        if (err.response === undefined) {
+          console.log(err.response.data);
           setHasError(true);
         } else {
           if (err.response.data === "Invalid credentials") {
