@@ -10,17 +10,6 @@ export default function AddReservation() {
     "http://localhost:8080/api/v1/rentals/" + rental_Id + "/rooms";
   const [rooms, setRooms] = useState([]);
 
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  const calculatePrice = (priceList) => {
-    let total = 0;
-    for (let i = 0; i < priceList.length; i++) {
-      total += Number(priceList[i]);
-    }
-    setTotalPrice(total);
-    return total;
-  };
-
   useEffect(() => {
     async function fetchRooms() {
       let response = await fetch(API_URL);
@@ -33,13 +22,12 @@ export default function AddReservation() {
       }
     }
     fetchRooms();
-  }, [API_URL, totalPrice]);
+  }, [API_URL]);
 
   return (
     <div>
       <Formik
         initialValues={{
-          prices: [],
           checkInDate: "",
           checkOutDate: "",
           totalAmount: "",
@@ -50,9 +38,7 @@ export default function AddReservation() {
           guestUserID: window.sessionStorage.getItem("userId"),
         }}
         onSubmit={(values) => {
-          console.log(values);
-          calculatePrice(values.prices);
-          console.log(totalPrice);
+          console.log(values.totalAmount);
           axios
             .post("http://localhost:8080/api/v1/reservations", values)
             .then((res) => {
@@ -70,17 +56,17 @@ export default function AddReservation() {
               <div className="col-md-10 mx-auto">
                 <Form className="addRentalForm">
                   <div className="form-group row">
-                    <div className="col-sm-6">
-                      Check In
+                    <div className="col-sm-6 text-color">
+                      <h5>Check In</h5>
                       <Field name="checkInDate" type="datetime-local" />
                     </div>
-                    <div className="col-sm-6">
-                      Check Out
+                    <div className="col-sm-6 text-color">
+                      <h5>Check Out</h5>
                       <Field name="checkOutDate" type="datetime-local" />
                     </div>
                   </div>
-                  <div className="form-group row">
-                    Write a message to host
+                  <div className="form-group row text-color">
+                    <h5>Write a message to host</h5>
                     <div className="col-sm-12">
                       <Field
                         name="messageToHost"
@@ -88,63 +74,46 @@ export default function AddReservation() {
                       />
                     </div>
                   </div>
-                  <div className="form-group">
-                    Available rooms
-                    <div className="col=-sm-12">
-                      <div className="roomContainer" style={roomContainerStyle}>
+                  <div className="form-group ">
+                    <h5 className="text-color"> Available rooms</h5>
+                    <div className="col=-sm-12 ">
+                      <div className="roomContainer mr-4">
                         {rooms.map((room, index) => {
                           return (
-                            <Card style={{ width: "18rem" }} key={index}>
-                              <Card.Body>
-                                <Card.Title>{room.name}</Card.Title>
-                                <Card.Subtitle className="mb-2 text-muted">
-                                  {room.price} $
-                                </Card.Subtitle>
-                                <Card.Text style={cardTextStyle}>
+                            <div
+                              className="card mb-4"
+                              style={{ borderRadius: "25px" }}
+                              key={index}
+                            >
+                              <h5 className="card-header">{room.name}</h5>
+                              <div className="card-body">
+                                <h5 className="card-title">
                                   {room.description}
-                                  <br></br>
-                                  Amenities:<br></br>
-                                  {room.amenities.map((amenity) => (
-                                    <>
-                                      {"\u00A0"}
-                                      {amenity.name}
-                                      <br></br>
-                                    </>
-                                  ))}
-                                </Card.Text>
+                                </h5>
+                                <h6>Amenities</h6>
+                                {room.amenities.map((amenity, index) => (
+                                  <span key={index}>{amenity.name} | </span>
+                                ))}
+                                <br />
                                 <div className="form-group form-check form-check-inline">
                                   <label>
                                     <Field
                                       type="checkbox"
                                       name="reservedRoomsIDs"
                                       value={`${room.id}`}
-                                      onClick={() => {
-                                        setFieldValue(
-                                          "totalAmount",
-                                          room.price + values.totalAmount
-                                        );
-                                      }}
                                     />
                                     I Want This Room
                                   </label>
                                 </div>
-                              </Card.Body>
-                            </Card>
+                              </div>
+                            </div>
                           );
                         })}
                       </div>
                     </div>
                   </div>
-                  {/* Total price */}
-                  <div
-                    style={priceStyle}
-                    className="col-sm-6"
-                    name="totalAmount"
-                  >
-                    {/* Total amount:{"\u00A0"}
-                    {totalPrice} */}
-                  </div>
-                  <button type="submit">Submit</button>
+
+                  <input className="btn_1" type="submit"></input>
                 </Form>
               </div>
             </div>
@@ -154,16 +123,3 @@ export default function AddReservation() {
     </div>
   );
 }
-const roomContainerStyle = {
-  display: "grid",
-  gridTemplateColumns: "repeat(2, 1fr)",
-};
-
-const cardTextStyle = {
-  color: "black",
-  content: "normal",
-};
-
-const priceStyle = {
-  fontWeight: "bold",
-};

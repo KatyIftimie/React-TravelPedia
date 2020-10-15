@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "../../style/RegisterForm.css";
 import axios from "axios";
+import swal from "sweetalert";
 import NotFound from "./NotFound";
 
 export default function Login() {
@@ -25,6 +26,14 @@ export default function Login() {
         if (res.status === 200) {
           setIsLogged(true);
           setLogInMsj("Success");
+          swal({
+            title: "Good job!",
+            text: "You are logged in!",
+            icon: "success",
+            button: { text: "Home", className: "btn_1" },
+          }).then(function () {
+            window.location = "/";
+          });
           window.sessionStorage.setItem("userEmail", user.email);
           if (window.sessionStorage.getItem("userEmail") !== undefined) {
             const userEmail = window.sessionStorage.getItem("userEmail");
@@ -37,9 +46,9 @@ export default function Login() {
             });
           }
 
-          setTimeout(() => {
-            history.push("/");
-          }, 1500);
+          // setTimeout(() => {
+          //   history.push("/");
+          // }, 1500);
         }
       })
       .catch((err) => {

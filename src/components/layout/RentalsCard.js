@@ -5,6 +5,7 @@ import "../../style/RentalsCard.css";
 import "../../style/CountryRentals.css";
 
 export default function RentalsTable(props) {
+  console.log(props);
   const rentalUrl = `/rental-details/${props.rental.id}`;
   const roomsNo = props.rental.rooms.length;
   const image = `http://localhost:8080/api/v1/images/rentals/rental-${props.rental.id}-0`;

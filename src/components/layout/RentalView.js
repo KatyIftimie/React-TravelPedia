@@ -5,29 +5,35 @@ import "../../style/CountryRentals.css";
 
 export default function RentalView(props) {
   const [details, setDetails] = useState([]);
+  const [hostID, setHostID] = useState(0);
+  const userId = window.sessionStorage.getItem("userId");
+
   const rentalId = props.location.pathname.split("/")[2];
+  const rentalApi = `http://localhost:8080/api/v1/rentals/${rentalId}`;
   const image = `http://localhost:8080/api/v1/images/rentals/rental-${details.id}-0`;
+  const image2 = `http://localhost:8080/api/v1/images/rentals/rental-${details.id}-1`;
 
   useEffect(() => {
     async function fetchData() {
-      let response = await fetch(
-        `http://localhost:8080/api/v1/rentals/${rentalId}`
-      );
+      let response = await fetch(rentalApi);
       let data = await response.json();
       if (response.ok) {
         setDetails(data);
+
+        setHostID(data.hostUser.id);
       } else {
         console.log("nu merge");
       }
     }
     fetchData();
-  }, [rentalId]);
+  }, [rentalApi]);
 
   const rating = 4;
 
   return (
     <div className="container propertyView">
       <h1> {details.name} </h1>
+
       <div>
         <StarRatingComponent name="rate1" starCount={5} value={rating} />
         <p style={{ color: "goldenrod" }}>
@@ -60,7 +66,6 @@ export default function RentalView(props) {
               ? details.checkOutTime.split("T")[1].split("Z")[0]
               : null}{" "}
           </p>
-          <p>Price per night: {details.minimumPricePerNight} RON</p>
         </div>
       </div>
 
@@ -68,6 +73,12 @@ export default function RentalView(props) {
         className="img-fluid "
         style={{ width: "300px" }}
         src={image}
+        alt="imag"
+      />
+      <img
+        className="img-fluid "
+        style={{ width: "300px" }}
+        src={image2}
         alt="imag"
       />
       <h5>{details.description}</h5>
@@ -93,13 +104,15 @@ export default function RentalView(props) {
                   width: "400px",
                   display: "inline-block",
                   margin: "30px",
+                  borderRadius: "25px",
                 }}
                 key={index}
               >
                 <div className="card-body">
                   <h4 className="card-title">{room.name}</h4>
                   <small>
-                    Type: {room.type.name}, Price: {room.price}
+                    Type: {room.type.name}, <br />
+                    Price: {room.price}$
                   </small>
                   <p className="card-text">{room.description}</p>
                   <div>
@@ -114,18 +127,17 @@ export default function RentalView(props) {
                       <small key={index}>-{amenity.name}- </small>
                     ))}
                   </div>
-
-                  <a
-                    href={`/rentals/${details.id}/add-reservation`}
-                    className="btn btn-primary"
-                  >
-                    Reserve now
-                  </a>
                 </div>
               </div>
             ))
           : null}
       </div>
+
+      {parseInt(userId) === hostID ? null : (
+        <a href={`/rentals/${details.id}/add-reservation`} className="btn_1">
+          Reserve now
+        </a>
+      )}
 
       <hr></hr>
       <h4>Reviews: </h4>

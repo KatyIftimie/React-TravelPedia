@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
 import FormikCheckbox from "./FormikCheckbox";
+import swal from "@sweetalert/with-react";
 
 import axios from "axios";
 
@@ -116,7 +117,17 @@ export default function AddRental2() {
                 .then((res) => {
                   console.log(res);
                   if (res.status === 200) {
-                    setRentalMsj("You rental was added Succesfuly");
+                    let rentalId = res.config.url.split("/").slice(-2)[0];
+                    console.log(rentalId);
+                    console.log(res);
+                    swal({
+                      title: "Good job!",
+                      text: "Your rental was added",
+                      icon: "success",
+                      button: { text: "OK", className: "btn_1" },
+                    }).then(function () {
+                      window.location = `/rental-details/${rentalId}`;
+                    });
                   }
                 });
             }
@@ -154,7 +165,7 @@ export default function AddRental2() {
                   {/* address */}
                   <div className="form-group row">
                     <div className="col-sm-6 text-color">
-                      Address <i class="far fa-address-card"></i>
+                      Address <i className="far fa-address-card"></i>
                       <Field
                         name="addressDto.addressLine1"
                         placeholder="Address Line 1"
