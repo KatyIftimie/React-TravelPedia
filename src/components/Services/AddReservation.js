@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 
 import axios from "axios";
-import Card from "react-bootstrap/Card";
 
 export default function AddReservation() {
   const rental_Id = window.location.href.split("/")[4];

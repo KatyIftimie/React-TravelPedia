@@ -4,13 +4,10 @@ export default function BookingsCard(props) {
   console.log(props);
   const image = `http://localhost:8080/api/v1/images/rentals/rental-${props.booking.rental.address.id}-0`;
   const roomsNo = props.booking.reservedRooms.length;
-  const rentalUrl = `/rental-details/${props.booking.rental.id}`;
 
   const calculatePrice = (roomsList) => {
     let total = 0;
-    roomsList.map((room) => {
-      total += room.price;
-    });
+    roomsList.map((room) => (total += room.price));
     return total;
   };
 
@@ -25,7 +22,7 @@ export default function BookingsCard(props) {
         <div className="card-overlay-a-content">
           <div className="card-header-a">
             <h2 className="card-title-a">
-              {/* <p className="rentalName text-sm" href="#">
+              <p className="rentalName text-sm" href="#">
                 Check In : {props.booking.checkInDate.split("T")[0]} Time :{" "}
                 {props.booking.checkInDate
                   .split("T")[1]
@@ -37,7 +34,7 @@ export default function BookingsCard(props) {
                   .split("T")[1]
                   .split(".")[0]
                   .slice(0, 5)}
-              </p> */}
+              </p>
             </h2>
           </div>
           <div className="card-body-a">

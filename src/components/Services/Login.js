@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import "../../style/RegisterForm.css";
@@ -12,8 +11,6 @@ export default function Login() {
   const [logInMsj, setLogInMsj] = useState("");
   const [isLoggedIn, setIsLogged] = useState(false);
   const [hasError, setHasError] = useState(false);
-
-  const history = useHistory();
 
   const LOGIN_API = "http://localhost:8080/api/v1/auth/login";
   const USER_API = "http://localhost:8080/api/v1/auth/get-user/";
@@ -45,15 +42,11 @@ export default function Login() {
               window.sessionStorage.setItem("userType", res.data.type.name);
             });
           }
-
-          // setTimeout(() => {
-          //   history.push("/");
-          // }, 1500);
         }
       })
       .catch((err) => {
-        if (err.response === undefined) {
-          console.log(err.response.data);
+        if (err) {
+          console.log(err);
           setHasError(true);
         } else {
           if (err.response.data === "Invalid credentials") {

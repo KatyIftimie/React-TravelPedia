@@ -13,7 +13,6 @@ export default function AddRental2() {
   const [roomTypes, setRoomType] = useState([]);
   const [bedType, setBedType] = useState([]);
   const [rentalType, setRentalType] = useState([]);
-  const [rentalMsj, setRentalMsj] = useState("");
 
   let fd = new FormData();
 
@@ -118,8 +117,7 @@ export default function AddRental2() {
                   console.log(res);
                   if (res.status === 200) {
                     let rentalId = res.config.url.split("/").slice(-2)[0];
-                    console.log(rentalId);
-                    console.log(res);
+
                     swal({
                       title: "Good job!",
                       text: "Your rental was added",
@@ -219,17 +217,15 @@ export default function AddRental2() {
                   </div>
                   <div className="row">
                     {amnities.map((amenity, index) => {
-                      if (amenity.amenityType.name === "RENTAL_AMENITY") {
-                        return (
-                          <FormikCheckbox
-                            name="amenitiesIDs"
-                            value={amenity.id}
-                            amenity={amenity}
-                            key={index}
-                            className="form-check form-check-inline"
-                          />
-                        );
-                      }
+                      return amenity.amenityType.name === "RENTAL_AMENITY" ? (
+                        <FormikCheckbox
+                          name="amenitiesIDs"
+                          value={amenity.id}
+                          amenity={amenity}
+                          key={index}
+                          className="form-check form-check-inline mx-auto"
+                        />
+                      ) : null;
                     })}
                   </div>
 
@@ -274,22 +270,18 @@ export default function AddRental2() {
                                   />
 
                                   <div className="row">
-                                    {amnities.map((amenity, index) => {
-                                      if (
-                                        amenity.amenityType.name ===
-                                        "ROOM_AMENITY"
-                                      ) {
-                                        return (
-                                          <FormikCheckbox
-                                            name={roomAmenity}
-                                            value={amenity.id}
-                                            amenity={amenity}
-                                            key={index}
-                                            className="form-check form-check-inline"
-                                          />
-                                        );
-                                      }
-                                    })}
+                                    {amnities.map((amenity, index) =>
+                                      amenity.amenityType.name ===
+                                      "ROOM_AMENITY" ? (
+                                        <FormikCheckbox
+                                          name={roomAmenity}
+                                          value={amenity.id}
+                                          amenity={amenity}
+                                          key={index}
+                                          className="form-check form-check-inline"
+                                        />
+                                      ) : null
+                                    )}
                                   </div>
                                   <div className="row ">
                                     <h5 className="mt-5 mx-auto text-color">
@@ -394,7 +386,6 @@ export default function AddRental2() {
 
                   <input className="btn_1" type="submit"></input>
                 </Form>
-                <p>{rentalMsj}</p>
               </div>
             </div>
           </div>
