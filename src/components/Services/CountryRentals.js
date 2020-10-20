@@ -6,11 +6,17 @@ export default function CountryRentals(props) {
   const [rentals, setRentals] = useState([]);
 
   const countryname = props.match.params.name;
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+  };
 
   useEffect(() => {
     async function fetchData() {
       let response = await fetch(
-        `http://localhost:8080/api/v1/rentals/country/${countryname}`
+        `http://localhost:8080/api/v1/rentals/country/${countryname}`,
+        { method: "GET", headers: headers }
       );
       let data = await response.json();
       console.log(data);
@@ -21,13 +27,7 @@ export default function CountryRentals(props) {
       }
     }
     fetchData();
-  }, [countryname]);
-
-  const hostelRental = rentals.filter(
-    (rental) => rental.type.name === "HOSTEL"
-  );
-
-  console.log(hostelRental);
+  }, [countryname, headers]);
 
   return (
     <div className="container countryRentals">
@@ -37,7 +37,6 @@ export default function CountryRentals(props) {
           console.log(rental);
           return <RentalsCard rental={rental} key={index} />;
         })}
-        {/* {rentalsToShow.length ? rentalsToShow : "Fetching Data..."} */}
       </div>
     </div>
   );

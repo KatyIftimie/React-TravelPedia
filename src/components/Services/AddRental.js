@@ -18,11 +18,13 @@ export default function AddRental2() {
 
   const headers = {
     "Access-Control-Allow-Origin": "*",
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
   };
 
   useEffect(() => {
     async function fetchAmenities() {
-      let response = await fetch(API_URL + "/amenities");
+      let response = await fetch(API_URL + "/amenities", headers);
       let data = await response.json();
 
       if (response.ok) {
@@ -33,7 +35,7 @@ export default function AddRental2() {
     }
 
     async function fetchRoomTypes() {
-      let response = await fetch(API_URL + "/rooms/room-types");
+      let response = await fetch(API_URL + "/rooms/room-types", headers);
       let data = await response.json();
       if (response.ok) {
         setRoomType(data);
@@ -43,7 +45,7 @@ export default function AddRental2() {
     }
 
     async function fetchBeds() {
-      let response = await fetch(API_URL + "/beds");
+      let response = await fetch(API_URL + "/beds", headers);
       let data = await response.json();
       if (response.ok) {
         setBedType(data);
@@ -71,7 +73,7 @@ export default function AddRental2() {
     fetchRoomTypes();
     fetchBeds();
     fetchRentalTypes();
-  }, []);
+  }, [headers]);
 
   return (
     <div>

@@ -90,14 +90,14 @@ export default function NavbarLayout() {
                 </ul>
               </div>
 
-              {userIsLogin && userType === "HOST" ? (
+              {userIsLogin && userType === "ROLE_HOST" ? (
                 <div className="btn_1 d-none d-lg-block">
                   <a className="float-right" href="/add-rental">
                     {" "}
                     Submit Property
                   </a>
                 </div>
-              ) : userIsLogin && userType === "GUEST" ? (
+              ) : userIsLogin && userType === "ROLE_GUEST" ? (
                 <div className="btn_1 d-none d-lg-block">
                   <a className="float-right" href="/bookings">
                     {" "}

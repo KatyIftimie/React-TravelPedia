@@ -23,6 +23,7 @@ export default function Login() {
         if (res.status === 200) {
           setIsLogged(true);
           setLogInMsj("Success");
+          window.sessionStorage.setItem("token", res.data.token);
           swal({
             title: "Good job!",
             text: "You are logged in!",
@@ -34,13 +35,21 @@ export default function Login() {
           window.sessionStorage.setItem("userEmail", user.email);
           if (window.sessionStorage.getItem("userEmail") !== undefined) {
             const userEmail = window.sessionStorage.getItem("userEmail");
-            axios.get(USER_API + userEmail).then((res) => {
-              console.log(res);
+            axios
+              .get(USER_API + userEmail, {
+                headers: {
+                  Authorization: `Bearer ${window.sessionStorage.getItem(
+                    "token"
+                  )}`,
+                },
+              })
+              .then((res) => {
+                console.log(res);
 
-              window.sessionStorage.setItem("userId", res.data.id);
-              window.sessionStorage.setItem("firstName", res.data.firstName);
-              window.sessionStorage.setItem("userType", res.data.type.name);
-            });
+                window.sessionStorage.setItem("userId", res.data.id);
+                window.sessionStorage.setItem("firstName", res.data.firstName);
+                window.sessionStorage.setItem("userType", res.data.type.name);
+              });
           }
         }
       })
