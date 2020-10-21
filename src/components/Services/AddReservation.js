@@ -7,12 +7,11 @@ export default function AddReservation() {
   const rental_Id = window.location.href.split("/")[4];
   const API_URL =
     "http://localhost:8080/api/v1/rentals/" + rental_Id + "/rooms";
-    const RENTAL_API_URL =
-    "http://localhost:8080/api/v1/rentals/" + rental_Id;
+  const RENTAL_API_URL = "http://localhost:8080/api/v1/rentals/" + rental_Id;
+
   const [rental, setRental] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isRentalAvailable, setRentalAvailable] = useState(true);
 
   const headers = {
     headers: {
@@ -24,58 +23,60 @@ export default function AddReservation() {
     const currentDate = new Date();
     const rentalCheckOutDate = new Date(rental["checkOutTime"]);
     return rentalCheckOutDate > currentDate;
-  }
+  };
 
   const minCheckInDateTime = () => {
     return formatDateForInput(null, false);
-  }
+  };
 
   const minCheckOutDateTime = () => {
     return formatDateForInput(null, true);
-  }
+  };
 
   const maxCheckoutDateTime = () => {
     return formatDateForInput(rental["checkOutTime"], false);
-  }
+  };
 
-  function formatDateForInput(date=null, addOne) {
+  function formatDateForInput(date = null, addOne) {
     // eslint-disable-next-line no-extend-native
-    Number.prototype.AddZero = function(b, c) {
-        const l = (String(b || 10).length - String(this).length) + 1;
-        return l > 0 ? new Array(l).join(c || '0') + this : this;
-    }
+    Number.prototype.AddZero = function (b, c) {
+      const l = String(b || 10).length - String(this).length + 1;
+      return l > 0 ? new Array(l).join(c || "0") + this : this;
+    };
 
     let d = date === null ? new Date() : new Date(date);
     if (addOne) d.setDate(d.getDate() + 1);
-    return [
-            d.getFullYear(), (d.getMonth() + 1).AddZero(), d.getDate().AddZero()
-        ].join('-') + 'T' +
-        [
-            d.getHours().AddZero(),
-            d.getMinutes().AddZero()
-        ].join(':');
-}
+    return (
+      [
+        d.getFullYear(),
+        (d.getMonth() + 1).AddZero(),
+        d.getDate().AddZero(),
+      ].join("-") +
+      "T" +
+      [d.getHours().AddZero(), d.getMinutes().AddZero()].join(":")
+    );
+  }
 
   useEffect(() => {
     if (loading) {
       async function fetchRooms() {
         let response = await fetch(API_URL, headers);
         let data = await response.json();
-  
+
         if (response.ok) {
           setRooms(data);
         } else {
           console.log("NU SUNT CAMERE");
         }
       }
-  
+
       async function fetchRental() {
         let response = await fetch(RENTAL_API_URL, headers);
         let data = await response.json();
-  
+
         if (response.ok) {
           setRental(data);
-          console.log(data)
+          console.log(data);
         } else {
           console.log("N AM RENTAL FA");
         }
@@ -86,7 +87,6 @@ export default function AddReservation() {
       fetchRental();
       fetchRooms();
     }
-  
   }, [API_URL, RENTAL_API_URL, headers, loading]);
 
   return (
@@ -123,11 +123,22 @@ export default function AddReservation() {
                   <div className="form-group row">
                     <div className="col-sm-6 text-color">
                       <h5>Check In</h5>
-                      <Field disabled={!checkIfRentalAvailable()} name="checkInDate" type="datetime-local" min={minCheckInDateTime()} />
+                      <Field
+                        disabled={!checkIfRentalAvailable()}
+                        name="checkInDate"
+                        type="datetime-local"
+                        min={minCheckInDateTime()}
+                      />
                     </div>
                     <div className="col-sm-6 text-color">
                       <h5>Check Out</h5>
-                      <Field disabled={!checkIfRentalAvailable()} name="checkOutDate" type="datetime-local" min={minCheckOutDateTime()} max={maxCheckoutDateTime()} />
+                      <Field
+                        disabled={!checkIfRentalAvailable()}
+                        name="checkOutDate"
+                        type="datetime-local"
+                        min={minCheckOutDateTime()}
+                        max={maxCheckoutDateTime()}
+                      />
                     </div>
                   </div>
                   <div className="form-group row text-color">
@@ -177,7 +188,9 @@ export default function AddReservation() {
                       </div>
                     </div>
                   </div>
-                  {checkIfRentalAvailable() ? <input className="btn_1" type="submit"></input> : null}
+                  {checkIfRentalAvailable() ? (
+                    <input className="btn_1" type="submit"></input>
+                  ) : null}
                 </Form>
               </div>
             </div>

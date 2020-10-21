@@ -18,6 +18,34 @@ export default function AddRental2() {
   const [rentalType, setRentalType] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const minCheckInDateTime = () => {
+    return formatDateForInput(null, false);
+  };
+
+  const minCheckOutDateTime = () => {
+    return formatDateForInput(null, true);
+  };
+
+  function formatDateForInput(date = null, addOne) {
+    // eslint-disable-next-line no-extend-native
+    Number.prototype.AddZero = function (b, c) {
+      const l = String(b || 10).length - String(this).length + 1;
+      return l > 0 ? new Array(l).join(c || "0") + this : this;
+    };
+
+    let d = date === null ? new Date() : new Date(date);
+    if (addOne) d.setDate(d.getDate() + 1);
+    return (
+      [
+        d.getFullYear(),
+        (d.getMonth() + 1).AddZero(),
+        d.getDate().AddZero(),
+      ].join("-") +
+      "T" +
+      [d.getHours().AddZero(), d.getMinutes().AddZero()].join(":")
+    );
+  }
+
   let fd = new FormData();
 
   const headers = {
@@ -132,7 +160,11 @@ export default function AddRental2() {
                   <div className="form-group row">
                     <div className="col-sm-6 text-color">
                       Check In <i className="far fa-check-circle"></i>
-                      <Field name="checkInTime" type="datetime-local" />
+                      <Field
+                        min={minCheckInDateTime()}
+                        name="checkInTime"
+                        type="datetime-local"
+                      />
                     </div>
                     <div className="col-sm-6 text-color">
                       Check Out
@@ -140,6 +172,7 @@ export default function AddRental2() {
                         name="checkOutTime"
                         placeholder="Name"
                         type="datetime-local"
+                        min={minCheckOutDateTime()}
                       />
                     </div>
                   </div>
