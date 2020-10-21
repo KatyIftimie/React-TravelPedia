@@ -26,15 +26,15 @@ export default function AddReservation() {
   };
 
   const minCheckInDateTime = () => {
-    return formatDateForInput(null, false);
+    return formatDateForInput(rental.checkInTime, false);
   };
 
   const minCheckOutDateTime = () => {
-    return formatDateForInput(null, true);
+    return formatDateForInput(rental.checkInTime, true);
   };
 
   const maxCheckoutDateTime = () => {
-    return formatDateForInput(rental["checkOutTime"], false);
+    return formatDateForInput(rental.checkOutTime, false);
   };
 
   function formatDateForInput(date = null, addOne) {
@@ -87,7 +87,7 @@ export default function AddReservation() {
       fetchRental();
       fetchRooms();
     }
-  }, [API_URL, RENTAL_API_URL, headers, loading]);
+  }, [API_URL, RENTAL_API_URL, headers, loading, rental.checkInDate]);
 
   return (
     <div>
