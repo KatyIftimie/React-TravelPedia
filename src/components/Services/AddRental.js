@@ -1,79 +1,61 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
 import FormikCheckbox from "./FormikCheckbox";
-import swal from "@sweetalert/with-react";
-
 import axios from "axios";
+import swal from "@sweetalert/with-react";
 
 export default function AddRental2() {
   const API_URL = "http://localhost:8080/api/v1";
   const RENTAL_API_URL = "http://localhost:8080/api/v1/rentals";
+  const amenitiesApi = API_URL + "/amenities";
+  const roomsApi = API_URL + "/rooms/room-types";
+  const bedsApi = API_URL + "/beds";
+  const rentalsTypeApi = API_URL + "/rentals/rental-types";
 
   const [amnities, setAmnities] = useState([]);
   const [roomTypes, setRoomType] = useState([]);
   const [bedType, setBedType] = useState([]);
   const [rentalType, setRentalType] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   let fd = new FormData();
 
   const headers = {
-    "Access-Control-Allow-Origin": "*",
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+    headers: {
+      Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+    },
   };
 
   useEffect(() => {
-    async function fetchAmenities() {
-      let response = await fetch(API_URL + "/amenities", headers);
-      let data = await response.json();
+    if (loading) {
+      const requestOne = axios.get(amenitiesApi, headers);
+      const requestTwo = axios.get(roomsApi, headers);
+      const requestThree = axios.get(bedsApi, headers);
+      const requestFour = axios.get(rentalsTypeApi, headers);
 
-      if (response.ok) {
-        setAmnities(data);
-      } else {
-        console.log("nu amenities");
-      }
+      axios
+        .all([requestOne, requestTwo, requestThree, requestFour])
+        .then(
+          axios.spread((...responses) => {
+            const AmenitiesList = responses[0];
+            const RoomsList = responses[1];
+            const BedList = responses[2];
+            const RentalsTypeList = responses[3];
+            console.log(BedList);
+
+            setAmnities(AmenitiesList.data);
+            setRoomType(RoomsList.data);
+            setBedType(BedList.data);
+            setRentalType(RentalsTypeList.data);
+            console.log(BedList, RoomsList);
+            setLoading(false);
+          })
+        )
+        .catch((errors) => {
+          // react on errors.
+        });
     }
-
-    async function fetchRoomTypes() {
-      let response = await fetch(API_URL + "/rooms/room-types", headers);
-      let data = await response.json();
-      if (response.ok) {
-        setRoomType(data);
-      } else {
-        console.log("nu camere");
-      }
-    }
-
-    async function fetchBeds() {
-      let response = await fetch(API_URL + "/beds", headers);
-      let data = await response.json();
-      if (response.ok) {
-        setBedType(data);
-      } else {
-        console.log("nu paturi");
-      }
-    }
-
-    async function fetchRentalTypes() {
-      let response = await fetch(API_URL + "/rentals/rental-types", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      let data = await response.json();
-      if (response.ok) {
-        setRentalType(data);
-      } else {
-        console.log("nu rental type");
-      }
-    }
-
-    fetchAmenities();
-    fetchRoomTypes();
-    fetchBeds();
-    fetchRentalTypes();
-  }, [headers]);
+  }, [amenitiesApi, bedsApi, headers, loading, rentalsTypeApi, roomsApi]);
 
   return (
     <div>
@@ -107,13 +89,13 @@ export default function AddRental2() {
         }}
         onSubmit={(values) => {
           // same shape as initial values
-          axios.post(RENTAL_API_URL, values).then((res) => {
+          axios.post(RENTAL_API_URL, values, headers).then((res) => {
             if (res.status === 200) {
               axios
                 .post(
                   `http://localhost:8080/api/v1/rentals/${res.data.new_rental_id}/images`,
                   fd,
-                  { headers: headers }
+                  headers
                 )
                 .then((res) => {
                   console.log(res);

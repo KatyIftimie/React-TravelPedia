@@ -6,6 +6,7 @@ import "../../style/CountryRentals.css";
 export default function RentalView(props) {
   const [details, setDetails] = useState([]);
   const [hostID, setHostID] = useState(0);
+  const [loading, setLoading] = useState(true);
   const userId = window.sessionStorage.getItem("userId");
 
   const rentalId = props.location.pathname.split("/")[2];
@@ -13,20 +14,28 @@ export default function RentalView(props) {
   const image = `http://localhost:8080/api/v1/images/rentals/rental-${details.id}-0`;
   const image2 = `http://localhost:8080/api/v1/images/rentals/rental-${details.id}-1`;
 
+  const headers = {
+    headers: {
+      Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+    },
+  };
+
   useEffect(() => {
     async function fetchData() {
-      let response = await fetch(rentalApi);
-      let data = await response.json();
-      if (response.ok) {
-        setDetails(data);
-
-        setHostID(data.hostUser.id);
+      if (loading) {
+        let response = await fetch(rentalApi, headers);
+        let data = await response.json();
+        if (response.ok) {
+          setDetails(data);
+          setHostID(data.hostAppUser.id);
+          setLoading(false);
+        }
       } else {
         console.log("nu merge");
       }
     }
     fetchData();
-  }, [rentalApi]);
+  }, [headers, loading, rentalApi]);
 
   const rating = 4;
 
