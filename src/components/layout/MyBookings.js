@@ -4,16 +4,25 @@ import axios from "axios";
 
 export default function MyBookings() {
   const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
   const userID = window.sessionStorage.getItem("userId");
 
   const reservationsApi = `http://localhost:8080/api/v1/reservations/user/${userID}`;
+  const headers = {
+    headers: {
+      Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+    },
+  };
 
   useEffect(() => {
-    axios.get(reservationsApi).then((res) => {
-      setBookings(res.data);
-      console.log(res);
-    });
-  }, [reservationsApi]);
+    if (loading) {
+      axios.get(reservationsApi, headers).then((res) => {
+        setBookings(res.data);
+        console.log(res);
+        setLoading(false);
+      });
+    }
+  }, [headers, loading, reservationsApi]);
 
   return (
     <div className="container countryRentals">

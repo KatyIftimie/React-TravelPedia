@@ -105,7 +105,7 @@ export default function AddReservation() {
         onSubmit={(values) => {
           console.log(values.totalAmount);
           axios
-            .post("http://localhost:8080/api/v1/reservations", values)
+            .post("http://localhost:8080/api/v1/reservations", values, headers)
             .then((res) => {
               if (res.status === 200) {
                 console.log("succes");
