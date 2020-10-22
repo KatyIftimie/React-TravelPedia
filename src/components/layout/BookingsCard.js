@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function BookingsCard(props) {
-  console.log(props);
   const image = `http://localhost:8080/api/v1/images/rentals/rental-${props.booking.rental.address.id}-0`;
   const roomsNo = props.booking.reservedRooms.length;
 
@@ -13,6 +12,18 @@ export default function BookingsCard(props) {
 
   let price = calculatePrice(props.booking.reservedRooms);
 
+  const checkIn = props.booking.checkInDate.split("T")[0];
+  const checkInTime = props.booking.checkInDate
+    .split("T")[1]
+    .split(".")[0]
+    .slice(0, 5);
+
+  const checkOut = props.booking.checkOutDate.split("T")[0];
+  const checkOutTime = props.booking.checkOutDate
+    .split("T")[1]
+    .split(".")[0]
+    .slice(0, 5);
+
   return (
     <div className="card-box-a card-shadow mr-3 mt-5 mx-auto">
       <div className="img-box-a">
@@ -23,17 +34,10 @@ export default function BookingsCard(props) {
           <div className="card-header-a">
             <h2 className="card-title-a">
               <p className="rentalName text-sm" href="#">
-                Check In : {props.booking.checkInDate.split("T")[0]} Time :{" "}
-                {props.booking.checkInDate
-                  .split("T")[1]
-                  .split(".")[0]
-                  .slice(0, 5)}
+                Check In : {checkIn} <br /> Time : {checkInTime}
                 <br />
-                Check Out : {props.booking.checkOutDate.split("T")[0]} Time :{" "}
-                {props.booking.checkOutDate
-                  .split("T")[1]
-                  .split(".")[0]
-                  .slice(0, 5)}
+                Check Out : {checkOut}
+                <br /> Time : {checkOutTime}
               </p>
             </h2>
           </div>
@@ -41,8 +45,13 @@ export default function BookingsCard(props) {
             <div className="price-box d-flex">
               <span className="price-a">Price To Pay : {price} $</span>
             </div>
-            {props.booking.reservedRooms.map((room) => {
-              return <span className="text-danger"> {room.name} | </span>;
+            {props.booking.reservedRooms.map((room, index) => {
+              return (
+                <span className="text-danger" key={index}>
+                  {" "}
+                  {room.name} |{" "}
+                </span>
+              );
             })}
           </div>
           <div className="card-footer-a">

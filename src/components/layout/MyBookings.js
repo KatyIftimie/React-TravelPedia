@@ -18,20 +18,23 @@ export default function MyBookings() {
     if (loading) {
       axios.get(reservationsApi, headers).then((res) => {
         setBookings(res.data);
-        console.log(res);
         setLoading(false);
       });
     }
   }, [headers, loading, reservationsApi]);
 
-  return (
-    <div className="container countryRentals">
-      <h1 className="text-center m-5">Your bookins</h1>
-      <div className="row">
-        {bookings.map((booking, index) => {
-          return <BookingCard booking={booking} key={index} />;
-        })}
+  if (loading) {
+    return <h1> Fetching data...</h1>;
+  } else {
+    return (
+      <div className="container countryRentals">
+        <h1 className="text-center m-5">Your bookins</h1>
+        <div className="row">
+          {bookings.map((booking, index) => {
+            return <BookingCard booking={booking} key={index} />;
+          })}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }

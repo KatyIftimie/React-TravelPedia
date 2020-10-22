@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
-
+import swal from "@sweetalert/with-react";
 import axios from "axios";
 
 export default function AddReservation() {
@@ -135,6 +135,14 @@ export default function AddReservation() {
             .post("http://localhost:8080/api/v1/reservations", values, headers)
             .then((res) => {
               if (res.status === 200) {
+                swal({
+                  title: "Good job!",
+                  text: "Your reservation was added.",
+                  icon: "success",
+                  button: { text: "OK", className: "btn_1" },
+                }).then(function () {
+                  window.location = "/";
+                });
                 console.log("succes");
               }
             });
