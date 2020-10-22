@@ -26,6 +26,7 @@ export default function RentalView(props) {
         let response = await fetch(rentalApi, headers);
         let data = await response.json();
         if (response.ok) {
+          console.log(data);
           setDetails(data);
           setHostID(data.hostAppUser.id);
           setLoading(false);

@@ -4,20 +4,44 @@ import { Formik, Form, Field } from "formik";
 import axios from "axios";
 
 export default function AddReservation() {
+  const headers = {
+    headers: {
+      Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
   const rental_Id = window.location.href.split("/")[4];
   const API_URL =
     "http://localhost:8080/api/v1/rentals/" + rental_Id + "/rooms";
   const RENTAL_API_URL = "http://localhost:8080/api/v1/rentals/" + rental_Id;
 
+  //check for availalbility
+  const BOOKED_ROOMS_API =
+    "http://localhost:8080/api/v1/reservations/bookedRooms";
+
+  const submitAvailability = (checkIn, checkOut) => {
+    axios
+      .post(
+        BOOKED_ROOMS_API,
+        JSON.stringify({
+          checkInDate: checkIn,
+          checkOutDate: checkOut,
+          rentalID: rental_Id,
+        }),
+        headers
+      )
+      .then((res) => {
+        setBookedRooms(res.data);
+        setChecked(true);
+      });
+  };
+
   const [rental, setRental] = useState([]);
   const [rooms, setRooms] = useState([]);
+  const [checked, setChecked] = useState(false);
+  const [bookedRooms, setBookedRooms] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const headers = {
-    headers: {
-      Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
-    },
-  };
 
   const checkIfRentalAvailable = () => {
     const currentDate = new Date();
@@ -27,6 +51,10 @@ export default function AddReservation() {
 
   const minCheckInDateTime = () => {
     return formatDateForInput(rental.checkInTime, false);
+  };
+
+  const maxCheckInDateTime = () => {
+    return formatDateForInput(rental.checkOutTime, false);
   };
 
   const minCheckOutDateTime = () => {
@@ -78,7 +106,7 @@ export default function AddReservation() {
           setRental(data);
           console.log(data);
         } else {
-          console.log("N AM RENTAL FA");
+          console.log("N AM RENTAL");
         }
       }
 
@@ -103,13 +131,11 @@ export default function AddReservation() {
           guestUserID: window.sessionStorage.getItem("userId"),
         }}
         onSubmit={(values) => {
-          console.log(values.totalAmount);
           axios
             .post("http://localhost:8080/api/v1/reservations", values, headers)
             .then((res) => {
               if (res.status === 200) {
                 console.log("succes");
-                console.log(values);
               }
             });
         }}
@@ -128,6 +154,7 @@ export default function AddReservation() {
                         name="checkInDate"
                         type="datetime-local"
                         min={minCheckInDateTime()}
+                        max={maxCheckInDateTime()}
                       />
                     </div>
                     <div className="col-sm-6 text-color">
@@ -141,6 +168,20 @@ export default function AddReservation() {
                       />
                     </div>
                   </div>
+                  <button
+                    className="btn_1"
+                    type="button"
+                    onClick={() => {
+                      submitAvailability(
+                        values.checkInDate,
+                        values.checkOutDate
+                      );
+                    }}
+                  >
+                    {" "}
+                    Check availalbility
+                  </button>
+
                   <div className="form-group row text-color">
                     <h5>Write a message to host</h5>
                     <div className="col-sm-12">
@@ -153,39 +194,53 @@ export default function AddReservation() {
                   <div className="form-group ">
                     <h5 className="text-color"> Available rooms</h5>
                     <div className="col=-sm-12 ">
-                      <div className="roomContainer mr-4">
-                        {rooms.map((room, index) => {
-                          return (
-                            <div
-                              className="card mb-4"
-                              style={{ borderRadius: "25px" }}
-                              key={index}
-                            >
-                              <h5 className="card-header">{room.name}</h5>
-                              <div className="card-body">
-                                <h5 className="card-title">
-                                  {room.description}
-                                </h5>
-                                <h6>Amenities</h6>
-                                {room.amenities.map((amenity, index) => (
-                                  <span key={index}>{amenity.name} | </span>
-                                ))}
-                                <br />
-                                <div className="form-group form-check form-check-inline">
-                                  <label>
-                                    <Field
-                                      type="checkbox"
-                                      name="reservedRoomsIDs"
-                                      value={`${room.id}`}
-                                    />
-                                    I Want This Room
-                                  </label>
+                      {checked ? (
+                        <div className="roomContainer mr-4">
+                          {rooms.map((room, index) => {
+                            // eslint-disable-next-line no-lone-blocks
+
+                            if (bookedRooms.includes(room.id)) {
+                              return (
+                                <h1 className="mb-5">
+                                  {room.name} Not Available
+                                </h1>
+                              );
+                            } else {
+                              return (
+                                <div
+                                  className="card mb-4"
+                                  style={{ borderRadius: "25px" }}
+                                  key={index}
+                                >
+                                  <h5 className="card-header">{room.name}</h5>
+                                  <div className="card-body">
+                                    <h5 className="card-title">
+                                      {room.description}
+                                    </h5>
+                                    <h6>Amenities</h6>
+                                    {room.amenities.map((amenity, index) => (
+                                      <span key={index}>{amenity.name} | </span>
+                                    ))}
+                                    <br />
+                                    <div className="form-group form-check form-check-inline">
+                                      <label>
+                                        <Field
+                                          type="checkbox"
+                                          name="reservedRoomsIDs"
+                                          value={`${room.id}`}
+                                        />
+                                        I Want This Room
+                                      </label>
+                                    </div>
+                                  </div>
                                 </div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
+                              );
+                            }
+                          })}
+                        </div>
+                      ) : (
+                        <h1> Please Check Availability</h1>
+                      )}
                     </div>
                   </div>
                   {checkIfRentalAvailable() ? (
